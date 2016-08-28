@@ -1,0 +1,53 @@
+<div class="row">
+	<div id="{@contentid}" class="maincontent col-md-12">
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th>User</th>
+					<th>Answer</th>
+					<th>Question</th>
+					<th>Date Reported</th>
+					<th>Reported By</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>{@tableRows}</tbody>
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	//$(".btnDismiss").on("click", function() { return ModAction($(this), "dismiss"); });
+	$("li.checkbox").on("click", function() {
+		var $cb = $(this).find("input");
+		if($cb.is(":checked")) { $cb.prop("checked", false); return false; }
+		var n = $cb.attr("name");
+		$("input[name='" + n + "']").prop("checked", false);
+		$cb.prop("checked", true);
+		return false;
+	});
+	$(".btnConfirm, .btnDismiss").on("click", function() {
+		var $row = $(this).closest("tr");
+		var actions = "";
+		if($(this).hasClass("btnConfirm")) { $("input:checked", $row).each(function() { actions += $(this).attr("data-type") + "|"; }); }
+		$.ajax({
+			type: "POST", dataType: "JSON", 
+			url: "moderatorAction.php",
+			data: {
+				user: $row.attr("data-user"), 
+				answer: $row.attr("data-answer"), 
+				question: $row.attr("data-question"),
+				action: actions
+			}, 
+			success: function(data) {
+				if(data.status) {
+					CreateNotification("success", "Action completed successfully!");
+					location.reload();
+				} else { CreateNotification("warning", "An error occurred!"); }
+			}, 
+			error: function() { CreateNotification("danger", "Something went wrong! Please try again later."); }
+		});
+		return false;
+	});
+});
+</script>

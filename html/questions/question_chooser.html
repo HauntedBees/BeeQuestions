@@ -1,0 +1,10 @@
+<div id="q{@questionId}" class="answer-container question" data-id="{@questionId}">
+	<h4><a href="#q{@questionId}">{@question}</a></h4>
+	<div class="metainfo">
+		<a href="user.php?user={@userId}">{@user}</a> &bullet; {@date} &bullet; <span class="score">{@score}</span>
+	</div>
+	<div class="actions">
+		<button class="btn btn-success chooseBtn chooseQuestion" title="Choose this question"><span class="glyphicon glyphicon-ok"></span> Choose</button> 
+		<button class="btn btn-danger reportBtn reportQuestion" title="Report this question"><span class="glyphicon glyphicon-warning-sign"></span> Report</button>
+	</div>
+</div>

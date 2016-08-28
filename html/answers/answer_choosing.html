@@ -1,0 +1,26 @@
+<div class="row well">
+	<div class="col-md-8">
+		<h3>{@answer}</h3>
+		{@tags}
+	</div>
+	<div id="answerInfo" class="col-md-4" data-id="{@aid}">
+		<ul>
+			<li>Answered: <span title="{@actualdate}">{@postdate}</span></li>
+			<li>Answered by: <a href="user.php?user={@userId}">{@user}</a></li>
+			<li>Viewed: {@views}</li>
+			<li><span class="score">{@score}</span> <button class="btn btn-primary likeBtn likeAnswer">Like</button></li>
+			<li><button class="btn btn-danger reportBtn reportAnswer" title="Report this answer"><span class="glyphicon glyphicon-warning-sign"></span> Report</button></li>
+		</ul>
+	</div>
+</div>
+<div class="row">
+	<div id="maincontent" class="col-md-8">{@questions}</div>
+	<div class="col-md-4">
+		<div>
+			<p>This answer is in Creator Choice right now! The original poster has a week to decide on the best question! If they don't pick by then, the answer will go into Community Voting and other users like you can vote for the best question!</p>
+			<p>Creator Choice ends in {@voteEnd}.</p>
+		</div>
+		<label for="similar">Similar Answers</label>
+		<ul id="similar">{@similaranswers}</ul>
+	</div>
+</div>

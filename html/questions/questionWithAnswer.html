@@ -1,0 +1,16 @@
+<div id="q{@questionId}" class="row question" data-id="{@questionId}">
+	<div class="col-md-12">
+		A: <a href="viewAnswer.php?answer={@answerId}">{@answer}</a>
+	</div>
+	<div class="col-md-12">
+		<div>
+			{@question}
+		</div>
+		<div>
+			<a href="user.php?user={@userId}">{@user}</a> &bullet; {@date}
+		</div>
+		<div>
+			<span class="score">{@score}</span> <button class="btn btn-primary likeBtn likeQuestion">Like</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+<tr data-user="{@uid}" data-answer="{@aid}" data-question="{@qid}">
+	<td><a href="user.php?user={@uid}">{@user}</a></td>
+	<td><a href="viewAnswer.php?answer={@aid}">{@answer}</a></td>
+	<td><a href="viewAnswer.php?answer={@aid}#q{@qid}">{@question}</a></td>
+	<td>{@date}</td>
+	<td>{@reporter}</td>
+	<td>
+		<div class="btn-group">
+			<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+			<ul class="dropdown-menu">
+				<li><a href="#" class="btnDismiss">Dismiss Report</a></li>
+				<li role="separator" class="divider"></li>
+				{@actions}
+				<li role="separator" class="divider"></li>
+				<li><a href="#" class="btnConfirm"><strong>Take Action(s)</strong></a></li>
+			</ul>
+		</div>
+	</td>
+</tr>

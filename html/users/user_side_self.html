@@ -1,0 +1,28 @@
+<div id="userInfo" class="well">
+	<div id="usernamediv">
+		<p id="showName" class="level{@level}"><span id="username" data-id="{@uid}">{@name}</span> <a href="#" title="Change name" id="changeName"><span class="glyphicon glyphicon-edit"></span></a></p>
+		<p id="editName" class="level{@level}" style="display:none">
+			<input type="text" id="nameInput" placeholder="Input a new username." /> 
+			<a href="#" title="Save changes" id="saveName"><span class="glyphicon glyphicon-ok"></span></a> 
+			<a href="#" title="Cancel" id="cancelName"><span class="glyphicon glyphicon-remove"></span></a>
+		</p>
+	</div>
+	<div class="c100 p{@percentage} small center" title="{@pointsNeeded} points to the next level!">
+		<span id="levelNumber">{@level}</span>
+		<div class="slice">
+			<div class="bar"></div>
+			<div class="fill"></div>
+		</div>
+	</div>
+	<p id="levelName">{@levelName}</p>
+	<p id="points">{@points} points</p>
+	<p id="levelDesc">{@levelDesc}</p>
+	<p id="memberSince">Member since {@joindate}.</p>
+	{@banSection}
+	<hr>
+	<div class="userStats"><label>Answers:</label> {@answerCount}</div>
+	<div class="userStats remaining"><label>Answers remaining for today:</label> <span class="rem{@remainingAnswers}">{@remainingAnswers}</span></div>
+	<div class="userStats"><label>Questions:</label> {@questionCount}</div>
+	<div class="userStats remaining"><label>Questions remaining for today:</label> <span class="rem{@remainingQuestions}">{@remainingQuestions}</span></div>
+	<div class="userStats"><label>Best Questions:</label> {@bestQuestionCount}</div>
+</div>

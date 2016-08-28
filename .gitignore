@@ -1,3 +1,13 @@
+Facebook/
+.codelite/
+secure/
+css/circle.css
+HTMLFriend/
+SQLManager/
+_extra/todo.txt
+*.phprj
+*.workspace
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

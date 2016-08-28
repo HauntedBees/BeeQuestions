@@ -1,0 +1,81 @@
+.navbar span { color: #FFF }
+.maincontent {
+    border: 1px solid #DDDDDD;
+	padding: 0;
+}
+#answersTab, #questionsTab {
+    border: 1px solid #DDDDDD;
+	border-top: 0;
+	padding: 0;
+}
+.topfilter {
+    background-color: #EEEEEE;
+    border-bottom: 1px solid #DDDDDD;
+}
+.filteroption {
+    display: inline-block;
+    font-size: large;
+    padding: 5px 15px;
+}
+.filteroption > a { color: #555555 !important }
+.filteroption.active { border-bottom: 2px solid #AA00AA }
+.filteroption.active > a { color: #000000 !important }
+.btn.btn-info.loadMore { width: 100% }
+
+.answer-container { border-bottom: 1px solid #DDDDDD; padding: 6px 15px; }
+.answer-container:last-child { border-bottom: 0 }
+.answer-container h2, .answer-container h4 { margin: 0 }
+.metaInfo { color: #666666; }
+.actions > button { font-size: smaller; padding: 3px 6px }
+
+#txtAnswer {
+    border-bottom: 1px solid #cccccc;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+#txtTags {
+    border-bottom-right-radius: 0;
+    border-top: 0 none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: none;
+    display: inline-table;
+	margin-right: -4px;
+    width: 60%;
+}
+#submitAnswer {
+    border-bottom-left-radius: 0;
+    border-left: 0 none;
+    border-top: 0 none;
+    border-top-right-radius: 0;
+    display: inline-table;
+    width: 40%;
+}
+
+
+/* User Screen */
+#userInfo { padding: 2px 0 5px }
+#userInfo p { text-align: center }
+#usernamediv { border-bottom: 1px solid #E3E3E3; margin-bottom: 10px }
+#userInfo hr { border-color: #E3E3E3; margin: 10px 0 5px }
+#showName, #editName { margin-bottom: 0; padding-bottom: 5px }
+#username { font-size: xx-large; margin-bottom: 0 }
+.level1 { border-bottom: 2px solid #BBBBBB }
+.level2 { border-bottom: 2px solid #88BBBB }
+.level3 { border-bottom: 2px solid #BB88BB }
+.level4 { border-bottom: 2px solid #88BB88 }
+.level5 { border-bottom: 2px solid #BB8888 }
+.level6 { border-bottom: 2px solid #8888BB }
+.level7 { border-bottom: 2px solid #FFFFFF }
+.level8 { border-bottom: 2px solid #BBBB88 }
+#levelName { font-size: large; margin-bottom: 0 }
+#points { color: #999999; font-size: x-small }
+#levelDesc { font-style: italic }
+#memberSince { color: #999999; font-size: small; margin-bottom: 0 }
+#levelNumber { color: #000000; font-size: 0.5em; line-height: 2em; width: 2em }
+#levelNumber:hover { font-size: 0.6em; line-height: 1.7em; width: 1.7em }
+.userStats { padding-left: 10px }
+.userStats:last-child label { margin-bottom: 2px }
+.userStats.remaining { text-align: right; font-style: italic; font-size: small; color: #999999; padding-right: 10px }
+.userStats.remaining label { margin-bottom: 0 }
+.rem2, .rem1, .rem0 { font-weight: bold; color: #FF0000 }
