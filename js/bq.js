@@ -167,7 +167,28 @@ function CreateNotification(type, message, url) {
 		$(".top-right").notify({ type: type, message: "<a href ='" + url + "'>" + message + "</a>" }).show();
 	}
 }
+function ResizeNameField() {
+	var sizes = ["xx-large", "x-large", "large", "medium", "small", "x-small", "xx-small"];
+	var i = 0;
+	$("#username").css("font-size", sizes[i]);
+	var $o = $("<div>").css({
+		position: "absolute",
+		visibility: "hidden",
+		height: "auto",
+		"font-size": sizes[i], 
+		width: "auto",
+		"white-space": "nowrap"
+	}).text($("#username").text());
+	$("body").append($o);
+	while($o.width() > ($("#username").parent().width()) && i < 6) {
+		$o.css("font-size", sizes[++i]);
+	}
+	$o.remove();
+	$("#username").css("font-size", sizes[i]);
+}
 function SetUpNameChanging() {
+	if(!$("#username").length) { return; }
+	ResizeNameField();
 	$("#nameInput").on("keypress", function(e) { 
 		if(e.keyCode == 13) { $("#saveName").trigger("click"); }
 		else if(e.keyCode == 27) { $("#cancelName").trigger("click"); }
@@ -189,6 +210,7 @@ function SetUpNameChanging() {
 					CreateNotification("success", "Name changed successfully!");
 					$("#username").text($.trim($("#nameInput").val()));
 					$("#showName").show(); $("#editName").hide();
+					ResizeNameField();
 				} else {
 					CreateNotification("warning", data.errorMessage);
 				}
