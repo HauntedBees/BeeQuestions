@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"]."/bq/SqlManager/SqlManager.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/bq/common/commonFunctions.php";
 class UserHandler {
 	private $sql;
 	function __construct() { $this->sql = new SQLManager(); }
