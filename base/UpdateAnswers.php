@@ -1,7 +1,7 @@
 <?php
 function UpdateAnswers() {
 	$query = <<<EOF
-SELECT a.cID, HEX(a.bqID) AS hexId, a.sAnswer, a.xUser, a.iStatus, COUNT(q.cID) AS questions
+SELECT a.cID, a.cID64, a.sAnswer, a.xUser, a.iStatus, COUNT(q.cID) AS questions
 FROM bq_answers a
 	LEFT JOIN bq_questions q ON q.xAnswer = a.cID
 WHERE a.dtStatusChanged < DATE_ADD(NOW(), INTERVAL -1 WEEK) AND a.bDeleted = 0 AND a.iStatus < 3
@@ -24,7 +24,7 @@ EOF;
 			$pushBackOneWeekIDs[] = $row["cID"];
 			continue;
 		}
-		$id64 = Base64::to64($row["hexId"]);
+		$id64 = $row["cID64"];
 		$template = "";
 		if($row["iStatus"] == 0) {
 			$moveToAnswererVotingIDs[] = $row["cID"];
@@ -42,11 +42,11 @@ EOF;
 			$notificationArgs["u$notificationCount"] = $row["xUser"];
 			$notificationCount++;
 			
-			$bestQ = $sql->QueryRow("SELECT cID, HEX(bnID), sQuestion, xUser FROM bq_questions WHERE xAnswer = :a ORDER BY iScore DESC LIMIT 0, 1", ["a" => $row["cID"]]);
+			$bestQ = $sql->QueryRow("SELECT cID, cID64, sQuestion, xUser FROM bq_questions WHERE xAnswer = :a ORDER BY iScore DESC LIMIT 0, 1", ["a" => $row["cID"]]);
 			$notificationParts[] = "(:u$notificationCount, 'youreBestQuestion.html', 'glyphicon-question-sign', :aURL$notificationCount, :a$notificationCount, :qURL$notificationCount, :q$notificationCount, NOW(), 0)";
 			$notificationArgs["aURL$notificationCount"] = "http://hauntedbees.com/bq/answers/$id64";
 			$notificationArgs["a$notificationCount"] = $row["sAnswer"];
-			$notificationArgs["qURL$notificationCount"] = "http://hauntedbees.com/bq/answers/$id64#q".Base64::to64($bestQ["bnID"]);
+			$notificationArgs["qURL$notificationCount"] = "http://hauntedbees.com/bq/answers/$id64#q".$bestQ["cID64"];
 			$notificationArgs["q$notificationCount"] = $bestQ["sQuestion"];
 			$notificationArgs["u$notificationCount"] = $bestQ["xUser"];
 			$notificationCount++;

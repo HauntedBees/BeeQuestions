@@ -13,10 +13,10 @@ FROM bq_users u
 	LEFT JOIN bq_levels nl ON (u.iLevel + 1) = nl.iLevel 
 	LEFT JOIN bq_answers a ON a.xUser = u.cID
 	LEFT JOIN bq_questions q ON q.xUser = u.cID
-WHERE u.bnID = :user
+WHERE u.cID64 = :user
 	GROUP BY u.cID
 EOT;
-$userInfo = $page->sql->QueryRow($query, ["user" => $page->QStoDB($_GET["user"], "6902")]);
+$userInfo = $page->sql->QueryRow($query, ["user" => $_GET["user"]]);
 if($userInfo == null) { $page->ReturnError("6902"); }
 
 $userId = intval($userInfo["cID"]);

@@ -21,7 +21,7 @@ function GetTagAnswers($basePage, $sql, $tag, $filter, $offset) {
 	}
 	$pagelen = PAGESIZE;
 	$query = <<<EOT
-SELECT a.cID AS answerId, HEX(a.bnID) AS hexId, a.sAnswer AS answertext, u.sDisplayName AS username, u.cID AS userId, a.dtOpened AS postdate, COUNT(DISTINCT q.cID) AS questions, 
+SELECT a.cID AS answerId, a.cID64, a.sAnswer AS answertext, u.sDisplayName AS username, u.cID64 AS uID64, a.dtOpened AS postdate, COUNT(DISTINCT q.cID) AS questions, 
 	(SELECT GROUP_CONCAT(DISTINCT t2.sTag) FROM bq_tags t2 INNER JOIN bq_answers_tags_xref x2 ON t2.cID = x2.xTag INNER JOIN bq_answers a2 ON x2.xAnswer = a2.cID WHERE a2.cID = a.cID) AS tagName
 FROM bq_answers a
 	INNER JOIN bq_users u ON a.xUser = u.cID
@@ -58,7 +58,7 @@ function GetFrontPageAnswers($basePage, $sql, $filter, $offset) {
 	}
 	$pagelen = PAGESIZE;
 	$query = <<<EOT
-SELECT answerId, hexId, answertext, username, userId, postdate, tagName, questions
+SELECT answerId, cID64, answertext, username, uID64, postdate, tagName, questions
 FROM FrontPageAnswers
 $additionalWhere
 $orderBy

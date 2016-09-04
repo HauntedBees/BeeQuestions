@@ -7,8 +7,9 @@ class UserHandler {
 	public function CreateOrUpdateFacebookUser($fbid, $name) {
 		$userId = $this->sql->QueryVal("SELECT cID FROM bq_users WHERE iFBID = :id", ["id" => $fbid]);
 		if($userId == null) {
-			$this->sql->Query("INSERT INTO bq_users (bnID, iFBID, sName, sDisplayName, dtJoined, dtLastLoad) VALUES (UNHEX(REPLACE(UUID() COLLATE utf8_unicode_ci, '-', '')), :id, :name, :disp, NOW(), NOW())", [
+			$this->sql->Query("INSERT INTO bq_users (cID64, iFBID, sName, sDisplayName, dtJoined, dtLastLoad) VALUES (:id64, :id, :name, :disp, NOW(), NOW())", [
 				"id" => $fbid, 
+				"id64" => Base64::GenerateBase64ID(), 
 				"name" => $name, 
 				"disp" => $this->GetRandomName()
 			]);
@@ -46,12 +47,12 @@ class UserHandler {
 					return [];
 				}
 				$user = $response->getGraphUser();
-				$userInfo = $this->sql->QueryRow("SELECT cID, HEX(bnID) AS hexId, sDisplayName, iModeratorTier FROM bq_users WHERE iFBID = :id", ["id" => $user["id"]]);
+				$userInfo = $this->sql->QueryRow("SELECT cID, cID64, sDisplayName, iModeratorTier FROM bq_users WHERE iFBID = :id", ["id" => $user["id"]]);
 				return [
 					"name" => $user["name"],
 					"displayName" => $userInfo["sDisplayName"],
 					"id" => $userInfo["cID"],
-					"hexId" => $userInfo["hexId"], 
+					"id64" => $userInfo["cID64"], 
 					"modTier" => $userInfo["iModeratorTier"]
 				];
 			}
@@ -63,7 +64,7 @@ class UserHandler {
 	}
 	public function GetLoginArea($fb, $userInfo) {
 		if(isset($_SESSION["fbid"])) {
-			return "<span>Logged in as <a href='http://hauntedbees.com/bq/users/".Base64::to64($userInfo["hexId"])."'>".$userInfo["name"]." (".$userInfo["displayName"].")</a></span> <a href='http://hauntedbees.com/bq/logout.php' class='btn btn-success btn-sm'>Log out</a>";
+			return "<span>Logged in as <a href='http://hauntedbees.com/bq/users/".$userInfo["id64"]."'>".$userInfo["name"]." (".$userInfo["displayName"].")</a></span> <a href='http://hauntedbees.com/bq/logout.php' class='btn btn-success btn-sm'>Log out</a>";
 		} else {
 			$helper = $fb->getRedirectLoginHelper();
 			$loginUrl = $helper->getLoginUrl("http://".$_SERVER["SERVER_NAME"]."/bq/fb-callback.php");

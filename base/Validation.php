@@ -2,11 +2,6 @@
 require_once $_SERVER["DOCUMENT_ROOT"]."/bq/Facebook/autoload.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/bq/user/UserHandler.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/bq/common/commonFunctions.php";
-$sql_bnID = "UNHEX(REPLACE(UUID() COLLATE utf8_unicode_ci, '-', ''))";
-function QStoDB($val, $errMsg) { // converts querystring value to binary value to search database with
-	if(strlen($val) != 21) { ReturnError($errMsg); }
-	return hex2bin(Base64::toHex($val));
-}
 function WordFilterAndRemoveHTML($s) {
 	$badWords = ["poopoo", "doodoo"];
 	$badRegexes = ["/\sjerks?/"];

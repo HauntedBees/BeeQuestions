@@ -57,7 +57,7 @@ function GetUserAnswers($basePage, $sql, $userId, $filter, $offset) {
 	}
 	$pageLen = PAGESIZE;
 	$query = <<<EOT
-	SELECT HEX(a.bnID) AS hexId, a.sAnswer AS answertext, u.sDisplayName AS username, u.cID AS userId, a.dtOpened AS postdate, COUNT(DISTINCT q.cID) AS questions, 
+	SELECT a.cID64, a.sAnswer AS answertext, u.sDisplayName AS username, u.cID64 AS uID64, a.dtOpened AS postdate, COUNT(DISTINCT q.cID) AS questions, 
 		(SELECT GROUP_CONCAT(DISTINCT t2.sTag) FROM bq_tags t2 INNER JOIN bq_answers_tags_xref x2 ON t2.cID = x2.xTag INNER JOIN bq_answers a2 ON x2.xAnswer = a2.cID WHERE a2.cID = a.cID) AS tagName
 	FROM bq_answers a
 		INNER JOIN bq_users u ON a.xUser = u.cID
@@ -94,7 +94,7 @@ function GetUserQuestions($basePage, $sql, $userId, $filter, $offset) {
 	}
 	$pageLen = PAGESIZE;
 	$query = <<<EOT
-	SELECT HEX(q.bnID) AS hexId, q.sQuestion, q.dtPosted, q.iScore, HEX(u.bnID) AS uHexId, u.sDisplayName, HEX(a.bnID) AS aHexId, a.sAnswer
+	SELECT q.cID64, q.sQuestion, q.dtPosted, q.iScore, u.cID64 AS uID64, u.sDisplayName, a.cID64 AS aID64, a.sAnswer
 	FROM bq_questions q
 		INNER JOIN bq_users u ON q.xUser = u.cID
 		INNER JOIN bq_answers a ON q.xAnswer = a.cID
@@ -109,11 +109,11 @@ EOT;
 	$count = 0;
 	$questionsHTML = $questionTemplate->GetPDOFetchAssocContent($questionsTable, function($row, $args) {
 		return [
-			"answerId" => Base64::to64($row["aHexId"]),
+			"answerId" => $row["aID64"],
 			"answer" => $row["sAnswer"], 
-			"questionId" => Base64::to64($row["hexId"]), 
+			"questionId" => $row["cID64"], 
 			"question" => $row["sQuestion"], 
-			"userId" => Base64::to64($row["uHexId"]), 
+			"userId" => $row["uID64"], 
 			"user" => $row["sDisplayName"], 
 			"date" => $args["page"]->GetTimeElapsedString(new DateTime($row["dtPosted"])), 
 			"score" => $row["iScore"]. " like".$args["page"]->Plural($row["iScore"])

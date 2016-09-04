@@ -4,16 +4,16 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/bq/base/BasePage.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/bq/common/questionFunctions.php";
 $page = new BasePage("answers/answer.html");
 $query = <<<EOT
-SELECT a.cID, a.sAnswer, u.sDisplayName, u.cID AS userId, HEX(u.bnID) AS uHexId, a.dtOpened, a.iViews, a.iScore, 
+SELECT a.cID, a.sAnswer, u.sDisplayName, u.cID AS userId, u.cID64 AS uID64, a.dtOpened, a.iViews, a.iScore, 
 	GROUP_CONCAT(DISTINCT t.sTag) AS tags, a.bDeleted, a.iStatus, a.dtClosed, a.dtStatusChanged
 FROM bq_answers a
 	INNER JOIN bq_users u ON a.xUser = u.cID
 	LEFT JOIN bq_answers_tags_xref x ON a.cID = x.xAnswer
 	LEFT JOIN bq_tags t ON x.xTag = t.cID
-WHERE a.bnID = :id
+WHERE a.cID64 = :id
 GROUP BY a.cID
 EOT;
-$answerRow = $page->sql->QueryRow($query, ["id" => $page->QStoDB($_GET["answer"], "6903")]);
+$answerRow = $page->sql->QueryRow($query, ["id" => $_GET["answer"]]);
 if($answerRow == null) { $page->ReturnError("6903"); }
 if(intval($answerRow["bDeleted"]) > 0) { $page->ReturnError("6904"); }
 
@@ -46,7 +46,7 @@ $closeDate = new DateTime($answerRow["dtClosed"]);
 $questionsHTML = "";
 if($iStatus == 3) {
 	$query = <<<EOT
-SELECT q.cID, HEX(q.bnID) AS hexID, q.sQuestion, q.dtPosted, q.iScore, u.cID AS userId, u.sDisplayName
+SELECT q.cID, q.cID64, q.sQuestion, q.dtPosted, q.iScore, u.cID64 AS uID64, u.sDisplayName
 FROM bq_questions q
 	INNER JOIN bq_users u ON q.xUser = u.cID
 	INNER JOIN bq_answers a ON q.xAnswer = a.cID
@@ -56,7 +56,7 @@ EOT;
 	$questionsHTML = (new Template("questions/bestQuestion.html"))->GetLoopedContent(GetQuestionRow($bestQuestion, ["basePage" => $page]));
 }
 $query = <<<EOT
-SELECT q.cID, HEX(q.bnID) AS hexID, q.sQuestion, q.dtPosted, q.iScore, u.cID AS userId, HEX(u.bnID) AS uHexId, u.sDisplayName
+SELECT q.cID, q.cID64, q.sQuestion, q.dtPosted, q.iScore, u.cID64 AS uID64, u.sDisplayName
 FROM bq_questions q
 	INNER JOIN bq_users u ON q.xUser = u.cID
 	INNER JOIN bq_answers a ON q.xAnswer = a.cID
@@ -76,7 +76,7 @@ for($i = 0; $i < count($tagArray); $i++) {
 }
 $tagInner = implode(",", $tagLabels);
 $query = <<<EOT
-SELECT HEX(a.bnID) AS hexId, a.sAnswer
+SELECT a.cID64, a.sAnswer
 FROM bq_answers a
 	INNER JOIN bq_answers_tags_xref x ON a.cID = x.xAnswer
 	INNER JOIN bq_tags t ON x.xTag = t.cID
@@ -87,7 +87,7 @@ EOT;
 $similarAnswers = $page->sql->Query($query, $params);
 $similarHTML = (new Template("answers/similarAnswer.html"))->GetPDOFetchAssocContent($similarAnswers, function($row, $args) {
 	return [
-		"id" => Base64::to64($row["hexId"]), 
+		"id" => $row["cID64"], 
 		"name" => $row["sAnswer"]
 	];
 });
@@ -108,7 +108,7 @@ echo $page->GetPage([
 	"closedate" => $page->GetTimeElapsedString($closeDate), 
 	"actualclose" => $page->FormatDate($closeDate), 
 	"user" => $answerRow["sDisplayName"], 
-	"userId" => Base64::to64($answerRow["uHexId"]), 
+	"userId" => $answerRow["uID64"], 
 	"voteEnd" => $voteEnd,
 	"similaranswers" => $similarHTML, 
 	"tags" => $tagsHTML,

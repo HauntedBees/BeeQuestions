@@ -28,9 +28,13 @@ EOT;
 $postedAs = $sql->QueryCount($query, ["user" => $userId]);
 if(($allowedAs - $postedAs) <= 0) { ReturnError("You can't give any more answers today!"); }
 
-$answerId = $sql->InsertAndReturn("INSERT INTO bq_answers (bnId, xUser, sAnswer, iStatus, iViews, iScore, dtStatusChanged, dtOpened) VALUES ($sql_bnID, :userId, :answer, 0, 0, 0, NOW(), NOW())", ["userId" => $userId, "answer" => $answer]);
+$answer64 = Base64::GenerateBase64ID();
+$answerId = $sql->InsertAndReturn("INSERT INTO bq_answers (cID64, xUser, sAnswer, iStatus, iViews, iScore, dtStatusChanged, dtOpened) VALUES (:id64, :userId, :answer, 0, 0, 0, NOW(), NOW())", [
+	"userId" => $userId,
+	"id64" => $answer64,
+	"answer" => $answer
+]);
 if($answerId == null || $answerId <= 0) { ReturnError("An error occurred posting your answer! Please try again later!"); }
-$answerHex = $sql->QueryVal("SELECT HEX(bnID) FROM bq_answers WHERE cID = :a", ["a" => $answerId]);
 
 $insertQueries = [];
 $insertVals = ["xAnswer" => $answerId];
@@ -50,7 +54,7 @@ $sql->Query("INSERT INTO bq_answers_tags_xref (xAnswer, xTag) VALUES ".implode("
 $levelData = IncrementScore($sql, $userId, -5);
 echo json_encode([
 	"status" => true,
-	"id" => Base64::to64($answerHex), 
+	"id" => $answer64, 
 	"pchange" => $levelData["pchange"],
 	"lchange" => $levelData["lchange"], 
 	"level" => $levelData["level"]

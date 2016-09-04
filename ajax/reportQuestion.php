@@ -4,7 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/bq/base/Validation.php";
 $userId = ValidateAndReturnUserId(true);
 $sql = new SQLManager();
 
-$questionID = $sql->QueryCount("SELECT cID FROM bq_questions q INNER JOIN bq_answers a ON q.xAnswer = a.cID WHERE q.bnID = :q AND a.dtClosed IS NULL", ["q" => QStoDB($_POST["id"], "Please select a valid question!")]);
+$questionID = $sql->QueryCount("SELECT cID FROM bq_questions q INNER JOIN bq_answers a ON q.xAnswer = a.cID WHERE q.cID64 = :q AND a.dtClosed IS NULL", ["q" => $_POST["id"]]);
 if($questionID == 0) { ReturnError("Please select a valid question!"); }
 
 $isYourQuestion = $sql->QueryExists("SELECT COUNT(*) FROM bq_questions WHERE cID = :q AND xUser = :u", ["q" => $questionID, "u" => $userId]);

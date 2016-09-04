@@ -27,10 +27,6 @@ class BasePage {
 		UpdateAnswers();
 	}
 	function ChangeTemplate($t) { $this->template = new Template($t); }
-	function QStoDB($val, $errCode) { // converts querystring value to binary value to search database with
-		if(strlen($val) != 21) { $this->ReturnError($errCode); }
-		return hex2bin(Base64::toHex($val));
-	}
 	function ReturnError($code) {
 		header("Location: http://hauntedbees.com/bq/index.html?errno=$code");
 		exit;
@@ -56,12 +52,12 @@ class BasePage {
 		$tags = explode(",", $row["tagName"]);
 		$tagsHTML = $tagTemplate->GetForEachContent($tags, function($elem, $args) { return ["name" => $elem]; });
 		return [
-			"url" => FULLPATH."answers/".Base64::to64($row["hexId"]),
+			"url" => FULLPATH."answers/".$row["cID64"],
 			"answer" => $row["answertext"],
 			"questions" => $row["questions"]." question".$this->Plural($row["questions"]),
 			"postdate" => $this->GetTimeElapsedString(new DateTime($row["postdate"])),
 			"user" => $row["username"],
-			"userURL" => FULLPATH."users/".$row["userId"],
+			"userURL" => FULLPATH."users/".$row["uID64"],
 			"tags" => $tagsHTML
 		];
 	}

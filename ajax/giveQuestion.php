@@ -9,7 +9,7 @@ $question = trim($_POST["question"]);
 if($question == "" || strlen($question) > 400) { ReturnError("Please enter a valid question (less than 400 characters)."); }
 
 $sql = new SQLManager();
-$answerId = $sql->QueryCount("SELECT cID FROM bq_answers WHERE bnID = :a AND dtClosed IS NULL", ["a" => QStoDB($_POST["answer"], "Please select a valid answer!")]);
+$answerId = $sql->QueryCount("SELECT cID FROM bq_answers WHERE cID64 = :a AND dtClosed IS NULL", ["a" => $_POST["answer"]]);
 if($answerId == 0) { ReturnError("Please select a valid answer!"); }
 
 $isOwnAnswer = $sql->QueryExists("SELECT COUNT(*) FROM bq_answers WHERE cID = :id AND xUser = :user", ["id" => $answerId, "user" => $userId]);
@@ -34,14 +34,15 @@ $postedQs = $sql->QueryCount($query, ["user" => $userId]);
 if(($allowedQs - $postedQs) <= 0) { ReturnError("You can't question any more answers today!"); }
 
 $question = WordFilterAndRemoveHTML($question);
-$questionId = $sql->InsertAndReturn("INSERT INTO bq_questions (bnID, xAnswer, xUser, sQuestion, dtPosted, iScore) VALUES ($sql_bnID, :answer, :userId, :question, NOW(), 0)", [
+$questionId = $sql->InsertAndReturn("INSERT INTO bq_questions (cID64, xAnswer, xUser, sQuestion, dtPosted, iScore) VALUES (:id64, :answer, :userId, :question, NOW(), 0)", [
 	"userId" => $userId, 
+	"id64" => Base64::GenerateBase64ID(),
 	"answer" => $answerId, 
 	"question" => $question
 ]);
 if($questionId == null || $questionId <= 0) { ReturnError("An error occurred posting your question! Please try again later!"); }
 
-$questionRow = $sql->QueryRow("SELECT q.cID, HEX(q.bnID) AS hexID, q.sQuestion, q.dtPosted, q.iScore, u.cID AS userId, u.sDisplayName FROM bq_questions q INNER JOIN bq_users u ON q.xUser = u.cID WHERE q.cID = :id", ["id" => $questionId]);
+$questionRow = $sql->QueryRow("SELECT q.cID, q.cID64, q.sQuestion, q.dtPosted, q.iScore, u.cID64 AS uID64, u.sDisplayName FROM bq_questions q INNER JOIN bq_users u ON q.xUser = u.cID WHERE q.cID = :id", ["id" => $questionId]);
 $html = (new Template("questions/question.html"))->GetLoopedContent(GetQuestionRow($questionRow, [ "basePage" => new BasePage("questions/question.html") ]));
 
 $levelData = IncrementScore($sql, $userId, 3);
