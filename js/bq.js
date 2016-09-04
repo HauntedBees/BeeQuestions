@@ -11,8 +11,7 @@ $(document).ready(function() {
 		select: function(e, ui) {
 			var terms = this.value.split(" ");
 			terms.pop();
-			if(ui.item.value != "") { terms.push(ui.item.value); }
-			terms.push("");
+			if(ui.item.value != "" && ui.item.value.indexOf(" ") == 0) { terms.push(ui.item.value); }
 			this.value = terms.join(" ");
 			return false;
 		}
