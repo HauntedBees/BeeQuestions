@@ -78,7 +78,8 @@ a.btn:visited { color: #FFFFFF }
 .rem2, .rem1, .rem0 { font-weight: bold; color: #FF0000 }
 .history-container .glyphicon { font-size: xx-large }
 .history-container > div { display: inline-block }
-.history-container > div:first-child { padding-right: 10px }
+.history-container > div:first-child { padding-right: 10px; vertical-align: top; width: 5% }
+.history-container > div:last-child { width: 94% }
 .question h3 { margin-top: 5px }
 
 /* Navigation Filters */
