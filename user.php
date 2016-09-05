@@ -84,8 +84,8 @@ echo $page->GetPage([
 	"historyTab" => $isUser ? "active" : "hidden", 
 	"answersFirst" => $isUser ? "" : "active", 
 	"QAfilter" => $page->GetQAFilterHTML(), 
-	"answers" => GetUserAnswers($page, $page->sql, $userId, "recent", 0), 
-	"questions" => GetUserQuestions($page, $page->sql, $userId, "recent", 0), 
+	"answers" => GetUserAnswers($page, $page->sql, $userId, "popular", 0), 
+	"questions" => GetUserQuestions($page, $page->sql, $userId, "popular", 0), 
 	"history" => $isUser ? GetUserHistory($page, $page->sql, $userId, "notifications", 0) : "", 
 	"userInfo" => $sidebar->GetContent()
 ]);
