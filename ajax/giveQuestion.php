@@ -7,7 +7,7 @@ $userId = ValidateAndReturnUserId(true);
 
 $question = trim($_POST["question"]);
 if($question == "" || strlen($question) > 400) { ReturnError("Please enter a valid question (less than 400 characters)."); }
-$question = WordFilterAndRemoveHTML($question);
+$question = trim(WordFilterAndRemoveHTML($question));
 
 $sql = new SQLManager();
 $answerId = $sql->QueryCount("SELECT cID FROM bq_answers WHERE cID64 = :a AND dtClosed IS NULL", ["a" => $_POST["answer"]]);
