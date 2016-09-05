@@ -11,8 +11,9 @@ $(document).ready(function() {
 		select: function(e, ui) {
 			var terms = this.value.split(" ");
 			terms.pop();
-			if(ui.item.value != "" && ui.item.value.indexOf(" ") == 0) { terms.push(ui.item.value); }
+			if(ui.item.value != "" && ui.item.value.indexOf(" ") < 0) { terms.push(ui.item.value); }
 			this.value = terms.join(" ");
+			$("#txtTags_hidden").val(this.value);
 			return false;
 		}
 	});
@@ -48,7 +49,8 @@ $(document).ready(function() {
 	$("#submitAnswer").on("click", function() {
 		var aval = $.trim($("#txtAnswer").val());
 		if(aval.length == 0 || aval.length > 400) { return CreateNotification("danger", "Please enter a valid answer (less than 400 characters)."); }
-		var tval = $.trim($("#txtTags").val());
+		var tval = $.trim($("#txtTags_hidden").val());
+		$("#txtTags").val(tval);
 		if(tval.length == 0) { return CreateNotification("danger", "Please enter one or more tags."); }
 		if(tval.length > 100) { return CreateNotification("danger", "That's way too many tags."); }
 		$.ajax({
