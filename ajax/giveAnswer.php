@@ -16,6 +16,7 @@ if($answer == "" || strlen($answer) > 400) { ReturnError("Please enter a valid a
 
 $sql = new SQLManager();
 $userLevel = $sql->QueryVal("SELECT iLevel FROM bq_users WHERE cID = :user", ["user" => $userId]);
+$canAdd = intval($userLevel) >= 3;
 $allowedAs = $sql->QueryCount("SELECT iAnswersPerDay FROM bq_levels WHERE iLevel = :level", ["level" => $userLevel]);
 $query = <<<EOT
 SELECT COUNT(DISTINCT a.cID) AS answerCount
@@ -37,7 +38,10 @@ for($i = 0; $i <= $taglen; $i++) {
 	$lower = WordFilterAndRemoveHTML(strtolower($tags[$i]));
 	if($lower == "") { continue; }
 	$id = $sql->QueryVal("SELECT cID FROM bq_tags WHERE sTag = :tag", ["tag" => $lower]);
-	if(intval($id) == 0) { $id = $sql->InsertAndReturn("INSERT INTO bq_tags (sTag) VALUES (:tag)", ["tag" => $lower]); }
+	if(intval($id) == 0) { 
+		if($canAdd) { $id = $sql->InsertAndReturn("INSERT INTO bq_tags (sTag) VALUES (:tag)", ["tag" => $lower]); }
+		else { continue; }
+	}
 	$insertQueries[] = "(:xAnswer, :tag$i)";
 	$insertVals["tag$i"] = $id;
 }

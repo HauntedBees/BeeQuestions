@@ -6,6 +6,18 @@ $(document).ready(function() {
 		$(this).closest(".question").addClass("selectedQ");
 		return true;
 	});
+	$("#txtTags").on("keydown", function(e) { if(e.keyCode === 9) { e.preventDefault(); } }).autocomplete({
+		source: "http://hauntedbees.com/bq/ajax/getTags.php", 
+		select: function(e, ui) {
+			var terms = this.value.split(" ");
+			terms.pop();
+			if(ui.item.value != "") { terms.push(ui.item.value); }
+			terms.push("");
+			this.value = terms.join(" ");
+			return false;
+		}
+	});
+	
 	$("#answersTab .filteroption a").on("click", function() { return FilterClick($(this), "getUserAnswers.php"); });
 	$("#questionsTab .filteroption a").on("click", function() { return FilterClick($(this), "getUserQuestions.php"); });
 	$("#historyTab .filteroption a").on("click", function() { return FilterClick($(this), "getUserHistory.php"); });

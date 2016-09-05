@@ -113,6 +113,7 @@ a.btn:visited { color: #FFFFFF }
 }
 
 /* General CSS */
+.ui-autocomplete { position:absolute; cursor:default; z-index:1001 !important }
 ul { padding-left: 0 }
 li { list-style: none }
 .maincontent { border: 1px solid #DDDDDD; padding: 0 }
