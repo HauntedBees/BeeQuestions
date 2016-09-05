@@ -35,7 +35,7 @@ class BasePage {
 		header("Location: http://hauntedbees.com/bq/index.html?errno=$code");
 		exit;
 	}
-	public function GetPage($keyArr) {
+	public function GetPage($keyArr = []) {
 		$this->template->SetKeys($keyArr);
 		$this->master->SetKey("content", $this->template->GetContent());
 		return $this->master->GetContent();
