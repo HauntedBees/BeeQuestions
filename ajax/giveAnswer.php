@@ -4,7 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/bq/base/BasePage.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/bq/base/Validation.php";
 $userId = ValidateAndReturnUserId(true);
 
-$answer = trim(WordFilterAndRemoveHTML(trim($_POST["answer"]));
+$answer = trim(WordFilterAndRemoveHTML(trim($_POST["answer"])));
 $tagstr = $_POST["tags"];
 $tags = explode(" ", $tagstr);
 $taglen = count($tags);
