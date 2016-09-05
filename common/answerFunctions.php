@@ -1,6 +1,6 @@
 <?php
 function GetTagAnswers($basePage, $sql, $tag, $filter, $offset) {
-	$orderBy = "ORDER BY a.dtStatusChanged DESC";
+	$orderBy = "ORDER BY popScore DESC";
 	$additionalWhere = " AND a.iStatus = 0";
 	switch($filter) {
 		case "popular":
@@ -38,7 +38,7 @@ EOT;
 }
 
 function GetFrontPageAnswers($basePage, $sql, $filter, $offset) {
-	$orderBy = "ORDER BY changed DESC";
+	$orderBy = "ORDER BY popScore DESC";
 	$additionalWhere = "WHERE status = 0";
 	switch($filter) {
 		case "popular":

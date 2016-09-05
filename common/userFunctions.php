@@ -36,7 +36,7 @@ EOT;
 }
 
 function GetUserAnswers($basePage, $sql, $userId, $filter, $offset) {
-	$orderBy = "ORDER BY a.dtStatusChanged DESC";
+	$orderBy = "ORDER BY popScore DESC";
 	$additionalWhere = " AND a.iStatus = 0";
 	switch($filter) {
 		case "popular":
@@ -74,7 +74,7 @@ EOT;
 }
 
 function GetUserQuestions($basePage, $sql, $userId, $filter, $offset) {
-	$orderBy = "ORDER BY q.dtPosted DESC";
+	$orderBy = "ORDER BY q.iScore DESC";
 	$additionalWhere = " AND a.iStatus = 0";
 	switch($filter) {
 		case "popular":
