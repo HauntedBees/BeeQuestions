@@ -22,5 +22,5 @@ $results = $userRow->GetPDOFetchAssocContent($data, function($row, $args) {
 	];
 });
 
-echo $page->GetPage(["tableRows" => $results]);
+echo $page->GetPage("User View", ["tableRows" => $results]);
 ?>

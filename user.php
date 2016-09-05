@@ -80,7 +80,7 @@ EOT;
 		"remainingQuestions" => intval($remaining["iQuestionsPerDay"]) - intval($current["questionCount"])
 	]);
 }
-echo $page->GetPage([
+echo $page->GetPage($userInfo["sDisplayName"], [
 	"historyTab" => $isUser ? "active" : "hidden", 
 	"answersFirst" => $isUser ? "" : "active", 
 	"QAfilter" => $page->GetQAFilterHTML(), 

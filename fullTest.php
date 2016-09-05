@@ -9,7 +9,7 @@ if(!isset($page->userInfo["modTier"])) { echo "nope"; exit; }
 $modTier = intval($page->userInfo["modTier"]);
 if($modTier < 100) { echo "nope"; exit; }
 
-echo $page->GetPage([
+echo $page->GetPage("Functionality Test", [
 	"test1Name" => "Popular 'Bees' Tag",
 	"test1" => GetTagAnswers($page, $page->sql, "bees", "popular", 0),
 	"test2Name" => "Popular Front Page Answers",

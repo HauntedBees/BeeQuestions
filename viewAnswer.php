@@ -98,7 +98,7 @@ $weekFromThen = date_add(new DateTime($voteEndDate), new DateInterval("P7D"));
 $voteEnd = str_replace(" ago", "", $page->GetTimeElapsedString($weekFromThen));
 
 $tagsHTML = (new Template("answers/tagEntry.html"))->GetForEachContent($tagArray, function($elem, $args) { return ["name" => $elem]; });
-echo $page->GetPage([
+echo $page->GetPage($answerRow["sAnswer"], [
 	"aid" => $_GET["answer"],
 	"score" => $answerRow["iScore"]. " like".$page->Plural($answerRow["iScore"]), 
 	"answer" => $answerRow["sAnswer"],

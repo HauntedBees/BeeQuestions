@@ -8,7 +8,7 @@ $top = new Template("general/top_tags.html");
 $top->SetKey("tag", $_GET["tag"]);
 $tagHTML = GetTagAnswers($page, $sql, $_GET["tag"], $_GET["filter"], 0);
 if($tagHTML == "") { $page->ReturnError("6901"); }
-echo $page->GetPage([
+echo $page->GetPage("Answers tagged '".$_GET["tag"]."'", [
 	"contentid" => "tagcontent",
 	"QAfilter" => $page->GetQAFilterHTML(),  
 	"content" => $tagHTML,

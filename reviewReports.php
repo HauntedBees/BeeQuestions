@@ -78,5 +78,5 @@ $results = $reportRow->GetPDOFetchAssocContent($data, function($row, $args) {
 	];
 }, ["actionTemplate" => $actionTemplate, "basePage" => $page, "tier" => $modTier]);
 
-echo $page->GetPage(["tableRows" => $results]);
+echo $page->GetPage("Review Reports", ["tableRows" => $results]);
 ?>

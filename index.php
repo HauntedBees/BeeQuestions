@@ -26,7 +26,7 @@ if(isset($_GET["errno"])) {
 } else {
 	$topHTML = (new Template("general/top_index.html"))->GetContent();
 }
-echo $page->GetPage([
+echo $page->GetPage("Bee Questions!", [
 	"contentid" => "frontpagecontent",
 	"QAfilter" => $page->GetQAFilterHTML(),  
 	"content" => GetFrontPageAnswers($page, $sql, $_GET["filter"], 0),
