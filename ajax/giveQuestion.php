@@ -7,6 +7,7 @@ $userId = ValidateAndReturnUserId(true);
 
 $question = trim($_POST["question"]);
 if($question == "" || strlen($question) > 400) { ReturnError("Please enter a valid question (less than 400 characters)."); }
+$question = WordFilterAndRemoveHTML($question);
 
 $sql = new SQLManager();
 $answerId = $sql->QueryCount("SELECT cID FROM bq_answers WHERE cID64 = :a AND dtClosed IS NULL", ["a" => $_POST["answer"]]);
@@ -33,7 +34,6 @@ EOT;
 $postedQs = $sql->QueryCount($query, ["user" => $userId]);
 if(($allowedQs - $postedQs) <= 0) { ReturnError("You can't question any more answers today!"); }
 
-$question = WordFilterAndRemoveHTML($question);
 $questionId = $sql->InsertAndReturn("INSERT INTO bq_questions (cID64, xAnswer, xUser, sQuestion, dtPosted, iScore) VALUES (:id64, :answer, :userId, :question, NOW(), 0)", [
 	"userId" => $userId, 
 	"id64" => Base64::GenerateBase64ID(),
