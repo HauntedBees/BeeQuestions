@@ -1,12 +1,12 @@
 {@top}
 <div class="row">
-	<div id="{@contentid}" class="maincontent col-md-8">
-		{@QAfilter}
-		<div class="listContent">{@content}</div>
-	</div>
-	<div class="col-md-4">
+	<div class="col-md-4 col-md-push-8">
 		<label for="topTags">Top Tags: </label>
 		<ul id="topTags">{@tags}</ul>
 		{@form}
+	</div>
+	<div id="{@contentid}" class="maincontent col-md-8 col-md-pull-4">
+		{@QAfilter}
+		<div class="listContent">{@content}</div>
 	</div>
 </div>
