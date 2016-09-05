@@ -1,22 +1,20 @@
-<div class="row well">
-	<div class="col-md-8">
-		<h3>{@answer}</h3>
-		{@tags}
-	</div>
-	<div id="answerInfo" class="col-md-4" data-id="{@aid}">
-		<ul>
-			<li>Answered: <span title="{@actualdate}">{@postdate}</span></li>
-			<li>Closed: <span title="{@actualclose}">{@closedate}</span></li>
-			<li>Answered by: <a href="user.php?user={@userId}">{@user}</a></li>
-			<li>Viewed: {@views}</li>
-			<li><span class="score">{@score}</span></li>
-			<li><button class="btn btn-danger reportBtn reportAnswer" title="Report this answer"><span class="glyphicon glyphicon-warning-sign"></span> Report</button></li>
-		</ul>
+<div class="row">
+	<div class="col-md-12">
+		<h2>{@answer}</h2>
+		<div id="tagLine"><div>{@tags}</div></div>
 	</div>
 </div>
 <div class="row">
 	<div id="maincontent" class="col-md-8">{@questions}</div>
 	<div class="col-md-4">
+		<ul id="answerInfo" data-id="{@aid}">
+			<li><label>Answered</label> <span title="{@actualdate}">{@postdate}</span></li>
+			<li><label>Closed</label> <span title="{@actualclose}">{@closedate}</span></li>
+			<li><label>Answered by</label> <a href="http://hauntedbees.com/bq/users/{@userId}">{@user}</a></li>
+			<li><label>Viewed</label> {@views}</li>
+			<li><label>Likes</label> <span class="score">{@score}</span></li>
+			<li><button class="btn btn-danger btn-sm reportBtn reportAnswer" title="Report this answer"><span class="glyphicon glyphicon-warning-sign"></span> Report</button></li>
+		</ul>
 		<label for="similar">Similar Answers</label>
 		<ul id="similar">{@similaranswers}</ul>
 	</div>

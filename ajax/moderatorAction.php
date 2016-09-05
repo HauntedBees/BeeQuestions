@@ -7,7 +7,7 @@ function PurgeQuestion($sql, $qID, $user) {
 	$sql->Query("UPDATE bq_questions SET bDeleted = 1 WHERE cID = :q", ["q" => $qID]);
 	$sql->Query("DELETE FROM bq_questions_likes_xref WHERE xQuestion = :q", ["q" => $qID]);
 	$question = $sql->QueryVal("SELECT sQuestion FROM bq_questions WHERE cID = :q", ["q" => $qID]);
-	$sql->Query("INSERT INTO bq_notifications (xUser, sTemplate, sToken1, dtPosted) VALUES (:u, 'deletedQuestion.html', :q, NOW())", [
+	$sql->Query("INSERT INTO bq_notifications (xUser, sTemplate, sIconClass, sToken1, dtPosted) VALUES (:u, 'deletedQuestion.html', 'glyphicon-ban-circle', :q, NOW())", [
 		"u" => $user,
 		"q" => $question
 	]);
@@ -21,7 +21,7 @@ function PurgeAnswer($sql, $aID, $user) {
 	$sql->Query("DELETE FROM bq_answers_likes_xref WHERE xAnswer = :a", ["a" => $aID]);
 	$sql->Query("DELETE FROM bq_answers_tags_xref WHERE xAnswer = :a", ["a" => $aID]);
 	$answer = $sql->QueryVal("SELECT sAnswer FROM bq_answers WHERE cID = :a", ["a" => $aID]);
-	$sql->Query("INSERT INTO bq_notifications (xUser, sTemplate, sToken1, dtPosted) VALUES (:u, 'deletedAnswer.html', :a, NOW())", [
+	$sql->Query("INSERT INTO bq_notifications (xUser, sTemplate, sIconClass, sToken1, dtPosted) VALUES (:u, 'deletedAnswer.html', 'glyphicon-ban-circle', :a, NOW())", [
 		"u" => $user,
 		"a" => $answer
 	]);
@@ -59,7 +59,7 @@ function BanUser($sql, $uID, $permanent, $tier) {
 	$banEndSQL = SQLManager::ToSQLDate($banEnd);
 	ErrorLog::AddError("arbys", $banEndSQL);
 	$sql->Query("UPDATE bq_users SET iTimesBanned = iTimesBanned + 1, dtBannedUntil = :d WHERE cID = :u", ["d" => $banEndSQL, "u" => $uID]);
-	$sql->Query("INSERT INTO bq_notifications (xUser, sTemplate, sToken1, dtPosted, bDismissed) VALUES (:u, 'banned.html', :t, NOW(), 0)", [ "u" => $uID, "t" => $banEnd->format("F j, Y") ]);
+	$sql->Query("INSERT INTO bq_notifications (xUser, sTemplate, sIconClass, sToken1, dtPosted, bDismissed) VALUES (:u, 'banned.html', 'glyphicon-ban-circle', :t, NOW(), 0)", [ "u" => $uID, "t" => $banEnd->format("F j, Y") ]);
 }
 
 $page = new BasePage("moderator/reportQueue.html");

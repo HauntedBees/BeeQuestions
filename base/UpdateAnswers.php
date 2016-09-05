@@ -15,7 +15,7 @@ EOF;
 	$moveToEveryoneVotingIDs = [];
 	$moveToCompleteIDs = [];
 	
-	$notificationQuery = "INSERT INTO bq_notifications (xUser, sTemplate, sToken1, sToken2, sToken3, sToken4, dtPosted, bDismissed) VALUES ";
+	$notificationQuery = "INSERT INTO bq_notifications (xUser, sTemplate, sIconClass, sToken1, sToken2, sToken3, sToken4, dtPosted, bDismissed) VALUES ";
 	$notificationParts = [];
 	$notificationArgs = [];
 	$notificationCount = 0;
@@ -28,7 +28,7 @@ EOF;
 		$template = "";
 		if($row["iStatus"] == 0) {
 			$moveToAnswererVotingIDs[] = $row["cID"];
-			$notificationParts[] = "(:u$notificationCount, 'yourAnswerIsReady.html', :aURL$notificationCount, :a$notificationCount, '', '', NOW(), 0)";
+			$notificationParts[] = "(:u$notificationCount, 'yourAnswerIsReady.html', 'glyphicon-info-sign', :aURL$notificationCount, :a$notificationCount, '', '', NOW(), 0)";
 			$notificationArgs["aURL$notificationCount"] = "viewAnswer.php?answer=$id64";
 			$notificationArgs["a$notificationCount"] = $row["sAnswer"];
 			$notificationArgs["u$notificationCount"] = $row["xUser"];
@@ -36,17 +36,17 @@ EOF;
 		} else if($row["iStatus"] == 1) {
 			$moveToEveryoneVotingIDs[] = $row["cID"];
 		} else if($row["iStatus"] == 2) {
-			$notificationParts[] = "(:u$notificationCount, 'yourAnswerHasVoted.html', :aURL$notificationCount, :a$notificationCount, '', '', NOW(), 0)";
-			$notificationArgs["aURL$notificationCount"] = "viewAnswer.php?answer=$id64";
+			$notificationParts[] = "(:u$notificationCount, 'yourAnswerHasVoted.html', 'glyphicon-info-sign', :aURL$notificationCount, :a$notificationCount, '', '', NOW(), 0)";
+			$notificationArgs["aURL$notificationCount"] = "http://hauntedbees.com/bq/answers/$id64";
 			$notificationArgs["a$notificationCount"] = $row["sAnswer"];
 			$notificationArgs["u$notificationCount"] = $row["xUser"];
 			$notificationCount++;
 			
 			$bestQ = $sql->QueryRow("SELECT cID, HEX(bnID), sQuestion, xUser FROM bq_questions WHERE xAnswer = :a ORDER BY iScore DESC LIMIT 0, 1", ["a" => $row["cID"]]);
-			$notificationParts[] = "(:u$notificationCount, 'youreBestQuestion.html', :aURL$notificationCount, :a$notificationCount, :qURL$notificationCount, :q$notificationCount, NOW(), 0)";
-			$notificationArgs["aURL$notificationCount"] = "viewAnswer.php?answer=$id64";
+			$notificationParts[] = "(:u$notificationCount, 'youreBestQuestion.html', 'glyphicon-question-sign', :aURL$notificationCount, :a$notificationCount, :qURL$notificationCount, :q$notificationCount, NOW(), 0)";
+			$notificationArgs["aURL$notificationCount"] = "http://hauntedbees.com/bq/answers/$id64";
 			$notificationArgs["a$notificationCount"] = $row["sAnswer"];
-			$notificationArgs["qURL$notificationCount"] = "viewAnswer.php?answer=$id64#q".Base64::to64($bestQ["bnID"]);
+			$notificationArgs["qURL$notificationCount"] = "http://hauntedbees.com/bq/answers/$id64#q".Base64::to64($bestQ["bnID"]);
 			$notificationArgs["q$notificationCount"] = $bestQ["sQuestion"];
 			$notificationArgs["u$notificationCount"] = $bestQ["xUser"];
 			$notificationCount++;

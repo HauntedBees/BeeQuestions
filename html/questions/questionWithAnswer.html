@@ -1,16 +1,12 @@
-<div id="q{@questionId}" class="row question" data-id="{@questionId}">
+<div id="q{@questionId}" class="row question answer-container" data-id="{@questionId}">
 	<div class="col-md-12">
-		A: <a href="viewAnswer.php?answer={@answerId}">{@answer}</a>
+		A: <a href="http://hauntedbees.com/bq/answers/{@answerId}">{@answer}</a>
 	</div>
 	<div class="col-md-12">
-		<div>
-			{@question}
-		</div>
-		<div>
-			<a href="user.php?user={@userId}">{@user}</a> &bullet; {@date}
-		</div>
-		<div>
-			<span class="score">{@score}</span> <button class="btn btn-primary likeBtn likeQuestion">Like</button>
+		<h3><a href="http://hauntedbees.com/bq/answers/{@answerId}#q{@questionId}">{@question}</a></h3>
+		<div><a href="http://hauntedbees.com/bq/users/{@userId}">{@user}</a> &bullet; {@date} &bullet; <span class="score">{@score}</span></div>
+		<div class="actions">
+			<button class="btn btn-primary btn-sm likeBtn likeQuestion" title="Like this question"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button> 
 		</div>
 	</div>
 </div>

@@ -1,5 +1,11 @@
 var hidden;
 $(document).ready(function() {
+	if($(".answer-container.question").length) { $(location.hash).addClass("selectedQ"); }
+	$(".answer-container.question a").on("click", function() {
+		$(".selectedQ").removeClass("selectedQ");
+		$(this).closest(".question").addClass("selectedQ");
+		return true;
+	});
 	$("#answersTab .filteroption a").on("click", function() { return FilterClick($(this), "getUserAnswers.php"); });
 	$("#questionsTab .filteroption a").on("click", function() { return FilterClick($(this), "getUserQuestions.php"); });
 	$("#historyTab .filteroption a").on("click", function() { return FilterClick($(this), "getUserHistory.php"); });
@@ -29,13 +35,13 @@ $(document).ready(function() {
 		if(tval.length > 100) { return CreateNotification("danger", "That's way too many tags."); }
 		$.ajax({
 			type: "POST", dataType: "JSON", 
-			url: "ajax/giveAnswer.php",
+			url: "http://hauntedbees.com/bq/ajax/giveAnswer.php",
 			data: { answer: aval, tags: tval }, 
 			success: function(data) {
 				if(data.status) {
 					CreateNotification("success", "Answer posted successfully!");
 					LevelNotification(data);
-					window.location = "viewAnswer.php?answer=" + data.id;
+					window.location = "http://hauntedbees.com/bq/answers/" + data.id;
 				} else {
 					CreateNotification("warning", data.errorMessage);
 				}
@@ -49,12 +55,14 @@ $(document).ready(function() {
 		if(qval.length == 0 || qval.length > 400) { return CreateNotification("danger", "Please enter a valid question (less than 400 characters)."); }
 		$.ajax({
 			type: "POST", dataType: "JSON", 
-			url: "ajax/giveQuestion.php",
+			url: "http://hauntedbees.com/bq/ajax/giveQuestion.php",
 			data: { answer: $("#answerInfo").attr("data-id"), question: qval }, 
 			success: function(data) {
 				if(data.status) {
 					CreateNotification("success", "Question posted successfully!");
 					$("#maincontent").append(data.html);
+					$(".selectedQ").removeClass("selectedQ");
+					$(".answer-container.question").last().addClass("selectedQ");
 					LevelNotification(data);
 				} else {
 					CreateNotification("warning", data.errorMessage);
@@ -76,7 +84,7 @@ $(document).ready(function() {
 function GetNotifications() {
 	if(document[hidden]) { return; }
 	$.ajax({
-		type: "GET", dataType: "JSON", url: "ajax/getNotifications.php",
+		type: "GET", dataType: "JSON", url: "http://hauntedbees.com/bq/ajax/getNotifications.php",
 		success: function(data) { for(var i = 0; i < data.length; i++) { CreateNotification("success", data[i].notif, data[i].url); } }
 	});
 }
@@ -95,7 +103,7 @@ function FilterClick($clicked, path, addtl, isLoadMore) {
 	if(addtl !== undefined) { $.extend(params, addtl); }
 	$.ajax({
 		type: "POST", dataType: "HTML", 
-		url: "ajax/" + path, 
+		url: "http://hauntedbees.com/bq/ajax/" + path, 
 		context: $clicked.parent(),
 		data: params, 
 		success: function(data) {
@@ -104,6 +112,7 @@ function FilterClick($clicked, path, addtl, isLoadMore) {
 			$(this).addClass("active");
 			if(isLoadMore) {
 				$(".loadMore").remove();
+				if(data == "No results found!") { return; }
 				var existing = $top.parent().find(".listContent").html();
 				$top.parent().find(".listContent").html(existing + data);
 			} else {
@@ -117,7 +126,7 @@ function FilterClick($clicked, path, addtl, isLoadMore) {
 function LikeClick($clicked, path, id, successMessage, report, choose) {
 	$.ajax({
 		type: "POST", dataType: "JSON", 
-		url: "ajax/" + path, 
+		url: "http://hauntedbees.com/bq/ajax/" + path, 
 		context: $clicked,
 		data: { id: id }, 
 		success: function(data) {
@@ -162,7 +171,7 @@ function SetUpNameChanging() {
 		}
 		$.ajax({
 			type: "POST", dataType: "JSON", 
-			url: "ajax/changeName.php", 
+			url: "http://hauntedbees.com/bq/ajax/changeName.php", 
 			data: {"name": $("#nameInput").val() }, 
 			success: function(data) {
 				if(data.status) {

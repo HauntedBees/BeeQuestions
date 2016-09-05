@@ -18,14 +18,14 @@ $sql->Query("UPDATE bq_answers SET iStatus = 3, dtClosed = NOW(), xBestQuestion 
 
 $questionData = $sql->QueryRow("SELECT q.xAnswer, q.sQuestion, a.sAnswer FROM bq_questions q INNER JOIN bq_answers a ON q.xAnswer = a.cID WHERE q.cID = :questionId", ["questionId" => $questionId]);
 $query = <<<EOT
-	INSERT INTO bq_notifications (xUser, sTemplate, sToken1, sToken2, sToken3, sToken4, dtPosted, bDismissed) VALUES 
-		(:them, 'yourBestQuestion.html', :aURL, :a, :qURL, :q, NOW(), 0)
+	INSERT INTO bq_notifications (xUser, sTemplate, sIconClass, sToken1, sToken2, sToken3, sToken4, dtPosted, bDismissed) VALUES 
+		(:them, 'yourBestQuestion.html', 'glyphicon-question-sign', :aURL, :a, :qURL, :q, NOW(), 0)
 EOT;
 $sql->Query($query, [
 	"them" => $questionData["uID"], 
-	"aURL" => "viewAnswer.php?id=$answer64", 
+	"aURL" => "http://hauntedbees.com/bq/answers/$answer64", 
 	"a" => $questionData["sAnswer"],
-	"qURL" => "viewAnswer.php?answer=$answer64#q".$_POST["id"], 
+	"qURL" => "http://hauntedbees.com/bq/answers/$answer64#q".$_POST["id"], 
 	"q" => $questionData["sQuestion"]
 ]);
 IncrementScore($sql, $userId, 5);

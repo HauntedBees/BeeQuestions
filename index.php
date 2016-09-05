@@ -21,7 +21,11 @@ if(isset($_GET["errno"])) {
 	$t = new Template("general/top_error.html");
 	$t->SetKey("text", $text);
 	$topHTML = $t->GetContent();
-} else { $topHTML = (new Template("general/top_index.html"))->GetContent(); }
+} else if(isset($page->userInfo["id"])) {
+	$topHTML = (new Template("general/top_signedin.html"))->GetContent();
+} else {
+	$topHTML = (new Template("general/top_index.html"))->GetContent();
+}
 echo $page->GetPage([
 	"contentid" => "frontpagecontent",
 	"QAfilter" => $page->GetQAFilterHTML(),  

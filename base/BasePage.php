@@ -31,7 +31,7 @@ class BasePage {
 		return hex2bin(Base64::toHex($val));
 	}
 	function ReturnError($code) {
-		header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.php?errno=$code");
+		header("Location: http://hauntedbees.com/bq/index.html?errno=$code");
 		exit;
 	}
 	public function GetPage($keyArr) {
@@ -44,7 +44,7 @@ class BasePage {
 		$alreadySignedIn = intval($sql->QueryVal("SELECT CASE WHEN DATE(dtLastLoad) = DATE(NOW()) THEN 1 ELSE 0 END FROM bq_users WHERE cID = :id", ["id" => $userId]));
 		if($alreadySignedIn == 0) {
 			$sql->Query("UPDATE bq_users SET dtLastLoad = NOW() WHERE cID = :id",  ["id" => $userId]);
-			$sql->Query("INSERT INTO bq_notifications (xUser, sTemplate, dtPosted, bDismissed) VALUES (:id, 'loginBonus.html', NOW(), 0)", ["id" => $userId]);
+			$sql->Query("INSERT INTO bq_notifications (xUser, sTemplate, sIconClass, dtPosted, bDismissed) VALUES (:id, 'loginBonus.html', 'glyphicon-ok-sign', NOW(), 0)", ["id" => $userId]);
 			IncrementScore($sql, $userId, 5);
 		}
 	}
@@ -55,12 +55,12 @@ class BasePage {
 		$tags = explode(",", $row["tagName"]);
 		$tagsHTML = $tagTemplate->GetForEachContent($tags, function($elem, $args) { return ["name" => $elem]; });
 		return [
-			"url" => "viewAnswer.php?answer=".Base64::to64($row["hexId"]),
+			"url" => FULLPATH."answers/".Base64::to64($row["hexId"]),
 			"answer" => $row["answertext"],
 			"questions" => $row["questions"]." question".$this->Plural($row["questions"]),
 			"postdate" => $this->GetTimeElapsedString(new DateTime($row["postdate"])),
 			"user" => $row["username"],
-			"userURL" => "user.php?user=".$row["userId"],
+			"userURL" => FULLPATH."users/".$row["userId"],
 			"tags" => $tagsHTML
 		];
 	}

@@ -3,7 +3,7 @@ function GetUserHistory($basePage, $sql, $userId, $filter, $offset) {
 	$pageLen = PAGESIZE;
 	$isLikes = $filter == "likes" ? "LIKE" : "NOT LIKE";
 	$query = <<<EOT
-	SELECT sTemplate, sToken1, sToken2, sToken3, sToken4, sToken5, sToken6, dtPosted
+	SELECT sTemplate, sIconClass, sToken1, sToken2, sToken3, sToken4, sToken5, sToken6, dtPosted
 	FROM bq_notifications
 	WHERE xUser = :user AND sTemplate $isLikes 'youLiked%'
 	ORDER BY dtPosted DESC
@@ -22,6 +22,7 @@ EOT;
 			"token6" => $row["sToken6"]
 		]);
 		return [
+			"icon" => $row["sIconClass"],
 			"content" => $innerTemplate->GetContent(),
 			"postdate" => $args["basePage"]->GetTimeElapsedString(new DateTime($row["dtPosted"]))
 		];

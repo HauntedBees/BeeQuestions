@@ -32,7 +32,7 @@ $(document).ready(function() {
 		if($(this).hasClass("btnConfirm")) { $("input:checked", $row).each(function() { actions += $(this).attr("data-type") + "|"; }); }
 		$.ajax({
 			type: "POST", dataType: "JSON", 
-			url: "moderatorAction.php",
+			url: "http://hauntedbees.com/bq/ajax/moderatorAction.php",
 			data: {
 				user: $row.attr("data-user"), 
 				answer: $row.attr("data-answer"), 

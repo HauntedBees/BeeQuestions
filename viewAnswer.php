@@ -20,7 +20,7 @@ if(intval($answerRow["bDeleted"]) > 0) { $page->ReturnError("6904"); }
 $answerId = $answerRow["cID"];
 $page->sql->Query("UPDATE bq_answers SET iViews = iViews + 1 WHERE cID = :id", ["id" => $answerId]);
 
-$qtemplate = "question.html";
+$qtemplate = "questions/question.html";
 $iStatus = intval($answerRow["iStatus"]);
 switch($iStatus) {
 	case 3:
@@ -84,7 +84,6 @@ WHERE t.sTag IN ($tagInner) AND x.xAnswer <> :a
 ORDER BY a.iViews DESC
 LIMIT 0, 5
 EOT;
-error_log($query);
 $similarAnswers = $page->sql->Query($query, $params);
 $similarHTML = (new Template("answers/similarAnswer.html"))->GetPDOFetchAssocContent($similarAnswers, function($row, $args) {
 	return [
@@ -103,7 +102,7 @@ echo $page->GetPage([
 	"aid" => $_GET["answer"],
 	"score" => $answerRow["iScore"]. " like".$page->Plural($answerRow["iScore"]), 
 	"answer" => $answerRow["sAnswer"],
-	"views" => $answerRow["iViews"], 
+	"views" => $answerRow["iViews"]. " time".$page->Plural($answerRow["iViews"]), 
 	"postdate" => $page->GetTimeElapsedString($postDate), 
 	"actualdate" => $page->FormatDate($postDate), 
 	"closedate" => $page->GetTimeElapsedString($closeDate), 

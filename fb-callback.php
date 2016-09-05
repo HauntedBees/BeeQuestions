@@ -14,11 +14,11 @@ try {
 	$accessToken = $helper->getAccessToken();
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
 	ErrorLog::AddError("fb-callback::FacebookResponseException", $e->getMessage());
-	header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.php?errno=4203");
+	header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.html?errno=4203");
 	exit;
 } catch(Facebook\Exceptions\FacebookSDKException $e) {
 	ErrorLog::AddError("fb-callback::FacebookSDKException", $e->getMessage());
-	header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.php?errno=4203");
+	header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.html?errno=4203");
 	exit;
 }
 if (!isset($accessToken)) {
@@ -27,7 +27,7 @@ if (!isset($accessToken)) {
 	} else {
 		ErrorLog::AddError("fb-callback::No Access Token", "Bad request");
 	}
-	header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.php?errno=4203");
+	header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.html?errno=4203");
 	exit;
 }
 
@@ -37,7 +37,7 @@ if (!$accessToken->isLongLived()) {
 		$accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
 	} catch (Facebook\Exceptions\FacebookSDKException $e) {
 		ErrorLog::AddError("fb-callback::FacebookSDKException", "Error getting long-lived access token: ".$helper->getMessage());
-		header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.php?errno=4203");
+		header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.html?errno=4203");
 		exit;
 	}
 }
@@ -49,5 +49,5 @@ $user = $response->getGraphUser();
 $uh = new UserHandler();
 $uh->CreateOrUpdateFacebookUser($user["id"], $user["name"]);
 
-header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.php");
+header("Location: http://".$_SERVER["SERVER_NAME"]."/bq/index.html");
 ?>

@@ -55,11 +55,11 @@ class UserHandler {
 	}
 	public function GetLoginArea($fb, $userInfo) {
 		if(isset($_SESSION["fbid"])) {
-			return "<span>Logged in as <a href='user.php?user=".Base64::to64($userInfo["hexId"])."'>".$userInfo["name"]." (".$userInfo["displayName"].")</a></span> <a href='logout.php' class='btn btn-success'>Log out</a>";
+			return "<span>Logged in as <a href='http://hauntedbees.com/bq/users/".Base64::to64($userInfo["hexId"])."'>".$userInfo["name"]." (".$userInfo["displayName"].")</a></span> <a href='http://hauntedbees.com/bq/logout.php' class='btn btn-success btn-sm'>Log out</a>";
 		} else {
 			$helper = $fb->getRedirectLoginHelper();
 			$loginUrl = $helper->getLoginUrl("http://".$_SERVER["SERVER_NAME"]."/bq/fb-callback.php");
-			return "<a href='".htmlspecialchars($loginUrl)."' class='btn btn-success'>Log in with Facebook!</a>";
+			return "<a href='".htmlspecialchars($loginUrl)."' class='btn btn-success btn-sm'>Log in with Facebook!</a>";
 		}
 	}
 }

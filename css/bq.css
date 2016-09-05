@@ -1,59 +1,56 @@
-.navbar span { color: #FFF }
-.maincontent {
-    border: 1px solid #DDDDDD;
-	padding: 0;
-}
-#answersTab, #questionsTab {
-    border: 1px solid #DDDDDD;
-	border-top: 0;
-	padding: 0;
-}
-.topfilter {
-    background-color: #EEEEEE;
-    border-bottom: 1px solid #DDDDDD;
-}
-.filteroption {
-    display: inline-block;
-    font-size: large;
-    padding: 5px 15px;
-}
-.filteroption > a { color: #555555 !important }
-.filteroption.active { border-bottom: 2px solid #AA00AA }
-.filteroption.active > a { color: #000000 !important }
-.btn.btn-info.loadMore { width: 100% }
+/* Top Bar */
+.navbar { min-height: 40px !important }
+.navbar > div { padding-top: 2px }
+.navbar span { color: #FFFFFF }
+#navbar { margin: 2px 0 }
+#beelogo { opacity: 0.7 }
+#beelogo:hover { opacity: 1; text-decoration: none }
+#beelogo > span { font-size: 18px; height: 50px; line-height: 20px; padding: 15px 5px }
 
-.answer-container { border-bottom: 1px solid #DDDDDD; padding: 6px 15px; }
-.answer-container:last-child { border-bottom: 0 }
-.answer-container h2, .answer-container h4 { margin: 0 }
-.metaInfo { color: #666666; }
-.actions > button { font-size: smaller; padding: 3px 6px }
+/* Infoboxes */
+.jumbotron.row { background-color: #DEF7FF; border: 1px solid #2F5BD6; border-radius: 2px; padding: 10px 0 }
 
-#txtAnswer {
-    border-bottom: 1px solid #cccccc;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-#txtTags {
-    border-bottom-right-radius: 0;
-    border-top: 0 none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    box-shadow: none;
-    display: inline-table;
-	margin-right: -4px;
-    width: 60%;
-}
-#submitAnswer {
-    border-bottom-left-radius: 0;
-    border-left: 0 none;
-    border-top: 0 none;
-    border-top-right-radius: 0;
-    display: inline-table;
-    width: 40%;
-}
+/* Intro Infobox */
+#intro p { font-size: medium }
+#intro .col-md-8 p { font-weight: bold }
+#introList { padding-left: 0 }
+#introList > li { display: inline-block; text-align: center; width: 32%; vertical-align: top }
+#introList > li > * { display: inline-block }
 
+/* Other Infoboxes */
+.generaltron p { margin-bottom: 0 }
+#signedinIntro p { font-size: medium }
+#tagName { font-weight: bold }
+#errorTop { background-color: #FFE6DE; border: 1px solid #CCB8B2; border-radius: 2px; padding: 10px 0 }
 
-/* User Screen */
+/* Tags */
+#topTags { display: inline-block }
+#topTags > li { display: inline-block }
+.tag.badge { background-color: #542CD4; border: 1px solid #361C87; border-radius: 3px; margin-right: 5px }
+.tag.badge:visited { color: #FFFFFF }
+
+/* Buttons */
+.btn-primary { background-color: #386CFF; border-color: #2F5BD6 }
+.btn-success { background-color: #25B347; border-color: #1D8C38 }
+
+/* Links */
+a { color: #386CFF }
+a:focus, a:hover { color: #6838FF }
+a:visited { color: #A82CD4 }
+a:visited:focus, a:visited:hover { color: #7F21A1 }
+a.btn:visited { color: #FFFFFF }
+
+/* Answers Page */
+#tagLine { border-bottom: 2px solid #D4542C; height: 11px; margin-bottom: 20px; width: 100% }
+#tagLine > div { background-color: #FFFFFF; display: inline-block }
+#answerInfo label { color: #888888; font-weight: normal; width: 100px }
+#newQuestionForm { padding-bottom: 10px }
+#txtNewQuestion { border-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0 }
+#submitQuestion { border-top: 1px solid #CCCCCC; border-top-left-radius: 0; border-top-right-radius: 0; display: inline-table; width: 100% }
+#similar li { padding-bottom: 5px; padding-left: 15px }
+.selectedQ { background-color: #FFE6DE }
+
+/* Users Page */
 #userInfo { padding: 2px 0 5px }
 #userInfo p { text-align: center }
 #usernamediv { border-bottom: 1px solid #E3E3E3; margin-bottom: 10px }
@@ -79,3 +76,50 @@
 .userStats.remaining { text-align: right; font-style: italic; font-size: small; color: #999999; padding-right: 10px }
 .userStats.remaining label { margin-bottom: 0 }
 .rem2, .rem1, .rem0 { font-weight: bold; color: #FF0000 }
+.history-container .glyphicon { font-size: xx-large }
+.history-container > div { display: inline-block }
+.history-container > div:first-child { padding-right: 10px }
+.question h3 { margin-top: 5px }
+
+/* Navigation Filters */
+.topfilter { background-color: #EEEEEE; border-bottom: 1px solid #DDDDDD }
+.filteroption { display: inline-block; font-size: large; padding: 5px 15px }
+.filteroption > a { color: #555555 !important }
+.filteroption.active { border-bottom: 2px solid #AA00AA }
+.filteroption.active > a { color: #000000 !important }
+.btn.btn-info.loadMore { width: 100% }
+
+/* Answer Submission Form */
+#txtAnswer { border-bottom: 1px solid #cccccc; border-bottom-left-radius: 0; border-bottom-right-radius: 0 }
+#txtTags {
+    border-bottom-right-radius: 0;
+    border-top: 0 none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: none;
+    display: inline-table;
+	margin-right: -4px;
+    width: 60%;
+}
+#submitAnswer {
+    border-bottom-left-radius: 0;
+    border-left: 0 none;
+    border-top: 1px solid transparent;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    display: inline-table;
+	margin-top: -2px;
+    width: 40%;
+}
+
+/* General CSS */
+ul { padding-left: 0 }
+li { list-style: none }
+.maincontent { border: 1px solid #DDDDDD; padding: 0 }
+#answersTab, #questionsTab { border: 1px solid #DDDDDD; border-top: 0; padding: 0 }
+
+.answer-container { border-bottom: 1px solid #DDDDDD; overflow: auto; padding: 6px 15px }
+.answer-container:last-child { border-bottom: 0 }
+.answer-container h2, .answer-container h4 { margin: 0 }
+.metaInfo { color: #666666; }
+.actions > button { font-size: smaller; padding: 3px 6px }

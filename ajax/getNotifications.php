@@ -9,7 +9,7 @@ $notificationCount = intval($sql->QueryVal("SELECT COUNT(*) FROM bq_notification
 if($notificationCount == 0) { exit; }
 if($notificationCount > 5) {
 	$sql->Query("UPDATE bq_notifications SET bDismissed = 1 WHERE bDismissed = 0 AND xUser = :user", ["user" => $userId]);
-	echo json_encode([["notif" => "You have $notificationCount notifications waiting for you!", "url" => "user.php?user=".Base64::to64($page->userInfo["hexId"])]]);
+	echo json_encode([["notif" => "You have $notificationCount notifications waiting for you!", "url" => "http://hauntedbees.com/bq/users/".Base64::to64($page->userInfo["hexId"])]]);
 	exit;
 }
 $notifications = $sql->Query("SELECT sTemplate, sToken1, sToken2, sToken3, sToken4, sToken5, sToken6 FROM bq_notifications WHERE bDismissed = 0 AND xUser = :user ORDER BY dtPosted DESC", ["user" => $userId]);

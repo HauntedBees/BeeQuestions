@@ -42,7 +42,7 @@ $questionId = $sql->InsertAndReturn("INSERT INTO bq_questions (bnID, xAnswer, xU
 if($questionId == null || $questionId <= 0) { ReturnError("An error occurred posting your question! Please try again later!"); }
 
 $questionRow = $sql->QueryRow("SELECT q.cID, HEX(q.bnID) AS hexID, q.sQuestion, q.dtPosted, q.iScore, u.cID AS userId, u.sDisplayName FROM bq_questions q INNER JOIN bq_users u ON q.xUser = u.cID WHERE q.cID = :id", ["id" => $questionId]);
-$html = (new Template("questions/question.html"))->GetLoopedContent(GetQuestionRow($questionRow, [ "basePage" => new BasePage("question.html") ]));
+$html = (new Template("questions/question.html"))->GetLoopedContent(GetQuestionRow($questionRow, [ "basePage" => new BasePage("questions/question.html") ]));
 
 $levelData = IncrementScore($sql, $userId, 3);
 echo json_encode([

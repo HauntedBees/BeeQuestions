@@ -1,5 +1,6 @@
 <?php
 define("PAGESIZE", 10);
+define("FULLPATH", "http://hauntedbees.com/bq/");
 class Base64 {
 	public static function toHex($val) { // ex: FNULUCOf4uqqH5ivdgRuj
 		$val .= "0";
