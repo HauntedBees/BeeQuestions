@@ -78,6 +78,7 @@ $(document).ready(function() {
 			success: function(data) {
 				if(data.status) {
 					CreateNotification("success", "Question posted successfully!");
+					$("#noQuestions").remove();
 					$("#maincontent").append(data.html);
 					$(".selectedQ").removeClass("selectedQ");
 					$(".answer-container.question").last().addClass("selectedQ");
