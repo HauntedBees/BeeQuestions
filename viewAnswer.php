@@ -112,6 +112,7 @@ echo $page->GetPage([
 	"voteEnd" => $voteEnd,
 	"similaranswers" => $similarHTML, 
 	"tags" => $tagsHTML,
-	"questions" => $questionsHTML
+	"questions" => $questionsHTML,
+	"form" => (new Template($page->isLoggedIn?"questions/questionForm.html":"questions/questionForm_locked.html"))->GetContent()
 ]);
 ?>

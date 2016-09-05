@@ -7,7 +7,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/bq/common/scoreUpdating.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/bq/base/UpdateAnswers.php";
 class BasePage {
 	private $uh, $master;
-	public $template, $fb, $userInfo, $sql;
+	public $template, $fb, $userInfo, $sql, $isLoggedIn;
 	function __construct($template) {
 		$c = parse_ini_file($_SERVER["DOCUMENT_ROOT"]."/bq/secure/config.ini", true)["facebook"];
 		$this->fb = new Facebook\Facebook([
@@ -20,6 +20,7 @@ class BasePage {
 		$this->master = new Template("master.html");
 		$this->template = new Template($template);
 		$this->userInfo = $this->uh->CheckSessionAndGetInfo($this->fb);
+		$this->isLoggedIn = isset($this->userInfo["id"]) && intval($this->userInfo["id"]) > 0;
 		$fblogin = $this->uh->GetLoginArea($this->fb, $this->userInfo);
 		$this->master->SetKey("fblogin", $fblogin);
 		$this->UpdateLogin($this->userInfo["id"]);

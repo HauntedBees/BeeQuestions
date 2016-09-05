@@ -32,6 +32,6 @@ echo $page->GetPage([
 	"content" => GetFrontPageAnswers($page, $sql, $_GET["filter"], 0),
 	"tags" => $page->GetTopTagsHTML($sql), 
 	"top" => $topHTML, 
-	"form" => (new Template("answers/answerForm.html"))->GetContent()
+	"form" => (new Template($page->isLoggedIn?"answers/answerForm.html":"answers/answerForm_locked.html"))->GetContent()
 ]);
 ?>
