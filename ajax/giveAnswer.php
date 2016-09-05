@@ -4,7 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/bq/base/BasePage.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/bq/base/Validation.php";
 $userId = ValidateAndReturnUserId(true);
 
-$answer = trim($_POST["answer"]);
+$answer = WordFilterAndRemoveHTML(trim($_POST["answer"]));
 $tagstr = $_POST["tags"];
 $tags = explode(" ", $tagstr);
 $taglen = count($tags);
@@ -34,7 +34,7 @@ $answerHex = $sql->QueryVal("SELECT HEX(bnID) FROM bq_answers WHERE cID = :a", [
 $insertQueries = [];
 $insertVals = ["xAnswer" => $answerId];
 for($i = 0; $i <= $taglen; $i++) {
-	$lower = strtolower($tags[$i]);
+	$lower = WordFilterAndRemoveHTML(strtolower($tags[$i]));
 	if($lower == "") { continue; }
 	$id = $sql->QueryVal("SELECT cID FROM bq_tags WHERE sTag = :tag", ["tag" => $lower]);
 	if(intval($id) == 0) { $id = $sql->InsertAndReturn("INSERT INTO bq_tags (sTag) VALUES (:tag)", ["tag" => $lower]); }
