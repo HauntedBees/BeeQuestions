@@ -56,7 +56,7 @@ INDEX ('xQuestion', 'xUser')
 
 CREATE VIEW FrontPageAnswers AS
 	SELECT a.cID AS answerId, a.cID64, a.sAnswer AS answertext, u.sDisplayName AS username, u.cID64 AS uID64, a.dtOpened AS postdate, GROUP_CONCAT(DISTINCT t.sTag) AS tagName, COUNT(DISTINCT q.cID) AS questions, 
-		a.dtStatusChanged AS changed, a.iScore AS score, a.iStatus AS status
+		a.dtStatusChanged AS changed, a.iScore AS score, a.iStatus AS status, a.iViews AS views
 	FROM bq_answers a
 		INNER JOIN bq_users u ON a.xUser = u.cID
 		INNER JOIN bq_answers_tags_xref x ON a.cID = x.xAnswer
@@ -64,19 +64,6 @@ CREATE VIEW FrontPageAnswers AS
 		LEFT JOIN bq_questions q ON q.xAnswer = a.cID
 	GROUP BY a.cID;
 	
-	
-CREATE PROCEDURE GetAnswersByTag(IN tagName VARCHAR(50))
-BEGIN
-	SELECT a.cID AS answerId, a.sAnswer AS answertext, u.sDisplayName AS username, a.dtOpened AS postdate,
-		(SELECT GROUP_CONCAT(DISTINCT t2.sTag) FROM bq_tags t2 INNER JOIN bq_answers_tags_xref x2 ON t2.cID = x2.xTag INNER JOIN bq_answers a2 ON x2.xAnswer = a2.cID WHERE a2.cID = a.cID) AS tagName
-	FROM bq_answers a
-		INNER JOIN bq_users u ON a.xUser = u.cID
-		INNER JOIN bq_answers_tags_xref x ON a.cID = x.xAnswer
-		INNER JOIN bq_tags t ON x.xTag = t.cID
-        WHERE t.sTag = tagName
-	GROUP BY a.cID
-	ORDER BY a.dtStatusChanged DESC;
-END
 
 CREATE TABLE 'bq_questions' (
 	'cID' BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,

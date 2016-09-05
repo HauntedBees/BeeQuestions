@@ -40,13 +40,13 @@ function GetUserAnswers($basePage, $sql, $userId, $filter, $offset) {
 	$additionalWhere = " AND a.iStatus = 0";
 	switch($filter) {
 		case "popular":
-			$orderBy = "ORDER BY a.iScore DESC";
+			$orderBy = "ORDER BY popScore DESC";
 			break;
 		case "recent":
 			$orderBy = "ORDER BY a.dtStatusChanged DESC";
 			break;
 		case "needslove":
-			$orderBy = "ORDER BY a.iScore ASC";
+			$orderBy = "ORDER BY nlScore ASC";
 			break;
 		case "invoting": 
 			$additionalWhere = " AND a.iStatus IN (1, 2)";
@@ -58,7 +58,8 @@ function GetUserAnswers($basePage, $sql, $userId, $filter, $offset) {
 	$pageLen = PAGESIZE;
 	$query = <<<EOT
 	SELECT a.cID64, a.sAnswer AS answertext, u.sDisplayName AS username, u.cID64 AS uID64, a.dtOpened AS postdate, COUNT(DISTINCT q.cID) AS questions, 
-		(SELECT GROUP_CONCAT(DISTINCT t2.sTag) FROM bq_tags t2 INNER JOIN bq_answers_tags_xref x2 ON t2.cID = x2.xTag INNER JOIN bq_answers a2 ON x2.xAnswer = a2.cID WHERE a2.cID = a.cID) AS tagName
+		(SELECT GROUP_CONCAT(DISTINCT t2.sTag) FROM bq_tags t2 INNER JOIN bq_answers_tags_xref x2 ON t2.cID = x2.xTag INNER JOIN bq_answers a2 ON x2.xAnswer = a2.cID WHERE a2.cID = a.cID) AS tagName,
+		COUNT(DISTINCT q.cID) * 3 + a.iScore AS popScore, a.iViews * 0.25 + COUNT(DISTINCT q.cID) * 10 + a.iScore * 5 AS nlScore
 	FROM bq_answers a
 		INNER JOIN bq_users u ON a.xUser = u.cID
 		INNER JOIN bq_answers_tags_xref x ON a.cID = x.xAnswer
@@ -83,7 +84,7 @@ function GetUserQuestions($basePage, $sql, $userId, $filter, $offset) {
 			$orderBy = "ORDER BY q.dtPosted DESC";
 			break;
 		case "needslove":
-			$orderBy = "ORDER BY q.iScore ASC";
+			$orderBy = "ORDER BY nlScore ASC";
 			break;
 		case "invoting": 
 			$additionalWhere = " AND a.iStatus IN (1, 2)";
@@ -94,7 +95,8 @@ function GetUserQuestions($basePage, $sql, $userId, $filter, $offset) {
 	}
 	$pageLen = PAGESIZE;
 	$query = <<<EOT
-	SELECT q.cID64, q.sQuestion, q.dtPosted, q.iScore, u.cID64 AS uID64, u.sDisplayName, a.cID64 AS aID64, a.sAnswer
+	SELECT q.cID64, q.sQuestion, q.dtPosted, q.iScore, u.cID64 AS uID64, u.sDisplayName, a.cID64 AS aID64, a.sAnswer,
+	a.iViews * 0.25 + q.iScore * 5 AS nlScore
 	FROM bq_questions q
 		INNER JOIN bq_users u ON q.xUser = u.cID
 		INNER JOIN bq_answers a ON q.xAnswer = a.cID
