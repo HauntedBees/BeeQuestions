@@ -38,7 +38,9 @@ function WordFilterAndRemoveHTML($s) {
 		foreach($badWords as $badWord) { if(preg_match("/.*$badWord.*/", $s3)) { ReturnError("Don't say words like that, come on."); } }
 		foreach($badRegexes as $badRegex) { if(preg_match($badRegex, $s3)) { ReturnError("Don't say words like that, come on."); } }
 	}
-	$sfixed = preg_replace("/</", "&lt;", $s);
+	$sfixed = preg_replace("/[\x00-\x1F\x80-\xFF]/", "", $s);
+	$sfixed = preg_replace("/</", "&lt;", $sfixed);
+	$sfixed = preg_replace("/&/", "&amp;", $sfixed);
 	return preg_replace("/>/", "&gt;", $sfixed);
 }
 function ReturnError($msg) {
