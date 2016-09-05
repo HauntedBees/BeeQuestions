@@ -7,7 +7,11 @@ class UserHandler {
 	public function CreateOrUpdateFacebookUser($fbid, $name) {
 		$userId = $this->sql->QueryVal("SELECT cID FROM bq_users WHERE iFBID = :id", ["id" => $fbid]);
 		if($userId == null) {
-			$this->sql->Query("INSERT INTO bq_users (bnID, iFBID, sName, sDisplayName, dtJoined, dtLastLoad) VALUES (UNHEX(REPLACE(UUID() COLLATE utf8_unicode_ci, '-', '')), :id, :name, :disp, NOW(), NOW())", ["id" => $fbid, "name" => $name, "disp" => $this->GetRandomName()]);
+			$this->sql->Query("INSERT INTO bq_users (bnID, iFBID, sName, sDisplayName, dtJoined, dtLastLoad) VALUES (UNHEX(REPLACE(UUID() COLLATE utf8_unicode_ci, '-', '')), :id, :name, :disp, NOW(), NOW())", [
+				"id" => $fbid, 
+				"name" => $name, 
+				"disp" => $this->GetRandomName()
+			]);
 			$userId = $this->sql->GetLastInsertId();
 		} else {
 			$this->sql->Query("UPDATE bq_users SET dtLastLoad = NOW() WHERE iFBID = :id", ["id" => $fbid]);
@@ -16,7 +20,11 @@ class UserHandler {
 	}
 	public function GetFacebookUser($fbid) { return $this->sql->QueryRow("SELECT cID, dtBannedUntil FROM bq_users WHERE iFBID = :id", ["id" => $fbid]); }
 	private function GetRandomName() {
-		return "Clyde"; // TODO: something
+		$randomNames = ["HockeyDad", "Dunkey", "Bobby", "Philosopher", "Wombat", "Beeper", "Arby", "TacoTuesday", "SaladElf", "Manatee", "Turgler", "RandySticks", "MODE", "BuyMyBook",
+						"BeeFriend", "BeeKeeper", "SpoonBuddy", "Barnabers", "Astacious", "Grunkle", "Dinner", "Skellington", "Gazebo", "Sports", "GolfHat", "KnockKnock", "TurtleHat", 
+						"Porridge", "Boots", "September", "Bee", "HauntedBee", "Food", "Plunger", "Pastry", "Pupper", "Doggo", "Tater", "Cookie", "Foooooot", "Hamburger", "Goblin"];
+		$randomNumber = rand(100, 999);
+		return $randomNames[rand(0, count($randomNames) - 1)].$randomNumber;
 	}
 	
 	public function CheckSessionAndGetInfo($fb) {
