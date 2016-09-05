@@ -16,6 +16,13 @@ $(document).ready(function() {
 			return false;
 		}
 	});
+	$("[data-toggle=popover]").popover({
+		html: true,
+		container: "body",
+		trigger: "click",
+		placement: "bottom", 
+		content: function() { return $($(this).attr("data-content-id")).html(); }
+	});
 	
 	$("#answersTab .filteroption a").on("click", function() { return FilterClick($(this), "getUserAnswers.php"); });
 	$("#questionsTab .filteroption a").on("click", function() { return FilterClick($(this), "getUserQuestions.php"); });

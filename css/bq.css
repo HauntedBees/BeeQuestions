@@ -81,6 +81,10 @@ a.btn:visited { color: #FFFFFF }
 .history-container > div:first-child { padding-right: 10px; vertical-align: top; width: 5% }
 .history-container > div:last-child { width: 94% }
 .question h3 { margin-top: 5px }
+.infoIcon { cursor: pointer; vertical-align: super }
+.popover { width: 400px; max-width: 400px }
+.popover-content th { font-size: xx-small; text-align: right }
+.popover-content td { font-size: x-small; padding: 2px 5px 2px 2px !important; text-align: right }
 
 /* Navigation Filters */
 .topfilter { background-color: #EEEEEE; border-bottom: 1px solid #DDDDDD }
