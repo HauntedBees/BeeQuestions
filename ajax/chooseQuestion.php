@@ -4,10 +4,10 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/bq/base/Validation.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/bq/common/scoreUpdating.php";
 $userId = ValidateAndReturnUserId(true);
 
+$sql = new SQLManager();
 $questionId = $sql->QueryCount("SELECT cID FROM bq_questions WHERE cID64 = :q", ["q" => $_POST["id"]]);
 if($questionId == 0) { ReturnError("Please select a valid question!"); }
 
-$sql = new SQLManager();
 $answerInfo = $sql->QueryRow("SELECT a.cID, a.cID64 FROM bq_questions q INNER JOIN bq_answers a ON q.xAnswer = a.cID WHERE q.cID = :q AND a.iStatus = 1 AND a.xUser = :u", ["q" => $questionId, "u" => $userId]);
 $answerId = intval($answerInfo["cID"]);
 if($answerId == 0) { ReturnError("Please select a valid question!"); }

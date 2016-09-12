@@ -31,7 +31,7 @@ switch($iStatus) {
 		$page->ChangeTemplate("answers/answer_voting.html");
 		break;
 	case 1:
-		if($row["userId"] == $page->userInfo["id"]) {
+		if($answerRow["userId"] == $page->userInfo["id"]) {
 			$page->ChangeTemplate("answers/answer_chooser.html");
 			$qtemplate = "questions/question_chooser.html";
 		} else {
