@@ -41,14 +41,23 @@ a:visited:focus, a:visited:hover { color: #7F21A1 }
 a.btn:visited { color: #FFFFFF }
 
 /* Answers Page */
-#tagLine { border-bottom: 2px solid #D4542C; height: 11px; margin-bottom: 20px; width: 100% }
+#tagLine, #otherLine { border-bottom: 2px solid #D4542C; height: 11px; margin-bottom: 20px; width: 100% }
 #tagLine > div { background-color: #FFFFFF; display: inline-block }
+#otherLine > div { background-color: #FFFFFF; display: inline-block; padding: 0 10px; margin-left: 20px }
 #answerInfo label { color: #888888; font-weight: normal; width: 100px }
 #newQuestionForm { padding-bottom: 10px }
 #txtNewQuestion { border-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0 }
 #submitQuestion { border-top: 1px solid #CCCCCC; border-top-left-radius: 0; border-top-right-radius: 0; display: inline-table; width: 100% }
 #similar li { padding-bottom: 5px; padding-left: 15px }
 .selectedQ { background-color: #FFE6DE }
+.bestQuestion {
+    background: #E7FFDE;
+    border: 2px solid #9CFF7A;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+.bestQuestion > h3 { border-bottom: 2px solid #9CFF7A; padding-bottom: 5px }
 
 /* Users Page */
 #userInfo { padding: 2px 0 5px }

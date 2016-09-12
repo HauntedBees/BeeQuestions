@@ -133,7 +133,7 @@ function FilterClick($clicked, path, addtl, isLoadMore) {
 			$(this).addClass("active");
 			if(isLoadMore) {
 				$(".loadMore").remove();
-				if(data == "No results found!") { return; }
+				if(data.indexOf("No results found!") >= 0) { return; }
 				var existing = $top.parent().find(".listContent").html();
 				$top.parent().find(".listContent").html(existing + data);
 			} else {

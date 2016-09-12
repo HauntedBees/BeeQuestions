@@ -1,5 +1,5 @@
-<div id="q{@questionId}" class="answer-container question" data-id="{@questionId}">
-	<h3>BEST QUESTION</h3>
+<div id="q{@questionId}" class="answer-container question bestQuestion" data-id="{@questionId}">
+	<h3><span class="glyphicon glyphicon-star"></span> BEST QUESTION</h3>
 	<h4><a href="#q{@questionId}">{@question}</a></h4>
 	<div class="metainfo">
 		<a href="http://hauntedbees.com/bq/users/{@userId}">{@user}</a> &bullet; {@date} &bullet; <span class="score">{@score}</span>
@@ -8,3 +8,4 @@
 		<button class="btn btn-danger reportBtn reportQuestion" title="Report this question"><span class="glyphicon glyphicon-warning-sign"></span> Report</button>
 	</div>
 </div>
+<div id="otherLine"><div>Other Questions</div></div>
