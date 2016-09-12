@@ -22,7 +22,7 @@ if($userInfo == null) { $page->ReturnError("6902"); }
 $userId = intval($userInfo["cID"]);
 $isUser = $userId == $page->userInfo["id"];
 
-$bestQuestionsCount = $page->sql->QueryVal("SELECT COUNT(DISTINCT q.cID) FROM bq_answers a INNER JOIN bq_questions q ON a.xBestQuestion = q.cID WHERE a.xUser = :user", ["user" => $userId]);
+$bestQuestionsCount = $page->sql->QueryVal("SELECT COUNT(DISTINCT q.cID) FROM bq_answers a INNER JOIN bq_questions q ON a.xBestQuestion = q.cID WHERE q.xUser = :user", ["user" => $userId]);
 $nextScore = intval($userInfo["nextScore"]);
 $percentageToNextLevel = 0;
 $pointsNeeded = 0;
