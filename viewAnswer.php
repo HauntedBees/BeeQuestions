@@ -76,7 +76,7 @@ for($i = 0; $i < count($tagArray); $i++) {
 }
 $tagInner = implode(",", $tagLabels);
 $query = <<<EOT
-SELECT a.cID64, a.sAnswer
+SELECT DISTINCT a.cID64, a.sAnswer
 FROM bq_answers a
 	INNER JOIN bq_answers_tags_xref x ON a.cID = x.xAnswer
 	INNER JOIN bq_tags t ON x.xTag = t.cID
