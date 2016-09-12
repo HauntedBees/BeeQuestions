@@ -20,7 +20,7 @@ EOF;
 	$notificationArgs = [];
 	$notificationCount = 0;
 	while($row = $table->fetch(PDO::FETCH_ASSOC)) {
-		if($row["questions"] == 0 && $row["iStatus"] == 0) {
+		if($row["questions"] <= 1 && $row["iStatus"] == 0) {
 			$pushBackOneWeekIDs[] = $row["cID"];
 			continue;
 		}
