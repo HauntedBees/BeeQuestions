@@ -155,11 +155,12 @@ function LikeClick($clicked, path, id, successMessage, report, choose) {
 				CreateNotification("success", successMessage);
 				if(report) {
 					$(this).find(".reportBtn").attr("disabled", "disabled");
+				} else if(choose) {
+					setTimeout(function() { location.reload(); }, 3000);
 				} else {
 					$(this).find(".score").text(data.count + " like" + (data.count == 1 ? "" : "s"));
 					$(this).find(".likeBtn").attr("disabled", "disabled");
 				}
-				if(choose) { setTimeout(function() { location.reload(); }, 5000); }
 			} else {
 				CreateNotification("warning", data.errorMessage);
 			}
