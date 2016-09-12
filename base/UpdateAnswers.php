@@ -29,7 +29,7 @@ EOF;
 		if($row["iStatus"] == 0) {
 			$moveToAnswererVotingIDs[] = $row["cID"];
 			$notificationParts[] = "(:u$notificationCount, 'yourAnswerIsReady.html', 'glyphicon-info-sign', :aURL$notificationCount, :a$notificationCount, '', '', NOW(), 0)";
-			$notificationArgs["aURL$notificationCount"] = "viewAnswer.php?answer=$id64";
+			$notificationArgs["aURL$notificationCount"] = "http://hauntedbees.com/bq/answers/$id64";
 			$notificationArgs["a$notificationCount"] = $row["sAnswer"];
 			$notificationArgs["u$notificationCount"] = $row["xUser"];
 			$notificationCount++;
