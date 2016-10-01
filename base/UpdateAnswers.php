@@ -43,7 +43,7 @@ EOF;
 			$notificationCount++;
 			
 			$bestQ = $sql->QueryRow("SELECT cID, cID64, sQuestion, xUser FROM bq_questions WHERE xAnswer = :a ORDER BY iScore DESC LIMIT 0, 1", ["a" => $row["cID"]]);
-			$notificationParts[] = "(:u$notificationCount, 'youreBestQuestion.html', 'glyphicon-question-sign', :aURL$notificationCount, :a$notificationCount, :qURL$notificationCount, :q$notificationCount, NOW(), 0)";
+			$notificationParts[] = "(:u$notificationCount, 'yourBestQuestion.html', 'glyphicon-question-sign', :aURL$notificationCount, :a$notificationCount, :qURL$notificationCount, :q$notificationCount, NOW(), 0)";
 			$notificationArgs["aURL$notificationCount"] = "http://hauntedbees.com/bq/answers/$id64";
 			$notificationArgs["a$notificationCount"] = $row["sAnswer"];
 			$notificationArgs["qURL$notificationCount"] = "http://hauntedbees.com/bq/answers/$id64#q".$bestQ["cID64"];
