@@ -1,6 +1,8 @@
 # Bee Questions
+## no
+This codebase is dead. Look at the newer [frontend](https://github.com/HauntedBees/BeeQuestions.Site) and [backend](https://github.com/HauntedBees/BeeQuestions.API/) repositories instead.
 ## wut
-Bee Questions is an A&Q website. Post answers, get questions. This repository has been replaced with newer [frontend](https://github.com/HauntedBees/BeeQuestions.Site) and [backend](https://github.com/HauntedBees/BeeQuestions.API/) repositories.
+Bee Questions is an A&Q website. Post answers, get questions.
 ## license
 Bee Questions is GPLv3 because yes.
 ## why
